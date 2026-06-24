@@ -14,7 +14,7 @@ const PaymentSchema = new Schema<IPayment>(
     passengerId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     bookingId: { type: Schema.Types.ObjectId, ref: 'Booking', required: true },
     amount: { type: Number, required: true },
-    currency: { type: String, default: 'usd' },
+    currency: { type: String, default: 'lkr' },
     stripePaymentIntentId: { type: String, required: true, unique: true },
     status: {
       type: String,

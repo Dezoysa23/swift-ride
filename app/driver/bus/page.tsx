@@ -94,13 +94,13 @@ export default function DriverBusPage() {
     if (!bus) return
     const latNum = parseFloat(lat)
     const lngNum = parseFloat(lng)
-    if (isNaN(latNum) || isNaN(lngNum)) {
+    if (isNaN(latNum) || isNaN(lngNum) || latNum < -90 || latNum > 90 || lngNum < -180 || lngNum > 180) {
       toast.error('Please enter valid coordinates')
       return
     }
     setUpdating(true)
     try {
-      const r = await fetch(`/api/driver/buses/${bus._id}/locations`, {
+      const r = await fetch('/api/location/driver/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lat: latNum, lng: lngNum }),

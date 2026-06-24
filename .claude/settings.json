@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx playwright *)",
+      "Bash(node -e ' *)",
+      "Bash(npm install *)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3001 -State Listen)",
+      "PowerShell(Stop-Process -Id 20568 -Force)",
+      "PowerShell(\"Process stopped\")",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(JSON.stringify\\(Object.keys\\(p.dependencies||{}\\).concat\\(Object.keys\\(p.devDependencies||{}\\)\\),null,0\\)\\)\")",
+      "Bash(xargs grep -l \"prisma\\\\|PrismaClient\\\\|neon\\\\|postgres\")",
+      "Bash(if [ -f \"C:/Users/ImalshaSudheera/.claude/debug/518dfa94-9d55-4ba0-a9f0-6f3827de3783.txt\" ]; then tail -100 \"C:/Users/ImalshaSudheera/.claude/debug/518dfa94-9d55-4ba0-a9f0-6f3827de3783.txt\"; else echo \"No debug log found\"; fi)",
+      "Read(//c/Users/ImalshaSudheera/.claude/debug/**)",
+      "Bash(cat \"C:/Users/ImalshaSudheera/.claude/settings.json\" 2>/dev/null || echo \"No user settings found\")",
+      "Read(//c/Users/ImalshaSudheera/.claude/**)",
+      "Bash(powershell \"Get-NetTCPConnection -LocalPort 3000,3001 -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort,State,OwningProcess | Format-Table\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3001)",
+      "Bash(powershell \"Get-NetTCPConnection -LocalPort 3000,3001 -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort\")",
+      "Bash(Remove-Item -Path \"c:\\\\Users\\\\ImalshaSudheera\\\\OneDrive - Keeping Children Healthy Foundation\\\\Swift.Ride 0.1\\\\app\\\\api\\\\driver\\\\buses\\\\[id]\\\\location\\\\route.ts\" -Force)",
+      "Bash(Remove-Item -Path \"c:\\\\Users\\\\ImalshaSudheera\\\\OneDrive - Keeping Children Healthy Foundation\\\\Swift.Ride 0.1\\\\app\\\\api\\\\driver\\\\passengers\\\\[id]\\\\check-in\\\\route.ts\" -Force)",
+      "Bash(awk -F= '{if \\(length\\($2\\)>0\\) print NR\": KEY IS SET \\(non-empty\\)\"; else print NR\": KEY IS EMPTY\"}')",
+      "Bash(awk -F= '/NEXT_PUBLIC_GOOGLE_MAPS_API_KEY/{if \\(length\\($2\\)>0\\) print \"NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: SET \\(non-empty\\)\"; else print \"NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: EMPTY\"} /GOOGLE_MAPS_SERVER_API_KEY/{if \\(length\\($2\\)>0\\) print \"GOOGLE_MAPS_SERVER_API_KEY: SET \\(non-empty\\)\"; else print \"GOOGLE_MAPS_SERVER_API_KEY: EMPTY\"}' .env.local)",
+      "Bash(awk -F= '/NEXT_PUBLIC_GOOGLE_MAPS_API_KEY/{if \\(length\\($2\\)>0\\) print \"NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: SET \\(non-empty\\)\"; else print \"NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: EMPTY\"}' .env)",
+      "Bash(grep -E \"^\\\\.env$|^\\\\.env\\\\.local$\")",
+      "PowerShell(cd \"c:\\\\Users\\\\ImalshaSudheera\\\\OneDrive - Keeping Children Healthy Foundation\\\\Swift.Ride 0.1\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"node_modules\" -and $_ -notmatch \"Cannot find module\" -and $_ -notmatch \"accordion|aspect-ratio|calendar|carousel|chart|checkbox|collapsible|command|context-menu|date-picker|drawer|form|hover-card|input-otp|menubar|navigation-menu|popover|progress|radio-group|resizable|slider|toggle|tooltip|seed-database\" })",
+      "PowerShell(cd \"c:\\\\Users\\\\ImalshaSudheera\\\\OneDrive - Keeping Children Healthy Foundation\\\\Swift.Ride 0.1\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -match \"error TS\" -and $_ -notmatch \"components/ui/\" -and $_ -notmatch \"scripts/seed\" })",
+      "PowerShell(cd \"c:\\\\Users\\\\ImalshaSudheera\\\\OneDrive - Keeping Children Healthy Foundation\\\\Swift.Ride 0.1\"; npx tsc --noEmit 2>&1 | Select-String \"error TS\" | Where-Object { $_.Line -notmatch \"components/ui/\" -and $_.Line -notmatch \"scripts/seed\" } | Select-Object -ExpandProperty Line)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\ImalshaSudheera\\OneDrive - Keeping Children Healthy Foundation\\Swift.Ride 0.1\\app\\api\\driver\\buses\\[id]\\location"
+    ]
+  }
+}

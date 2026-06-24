@@ -167,9 +167,9 @@ export default async function AdminDashboardPage() {
                       </TableCell>
                       <TableCell className="text-xs">{b.passengerId?.name ?? '—'}</TableCell>
                       <TableCell className="text-xs">
-                        {b.routeId ? `${b.routeId.routeNumber} ${b.routeId.name}` : '—'}
+                        {b.routeId ? [b.routeId.routeNumber, b.routeId.name].filter(Boolean).join(' ') : '—'}
                       </TableCell>
-                      <TableCell className="text-xs">LKR {b.fare}</TableCell>
+                      <TableCell className="text-xs">{b.fare != null ? `LKR ${b.fare}` : '—'}</TableCell>
                       <TableCell>
                         <StatusBadge status={b.status} />
                       </TableCell>

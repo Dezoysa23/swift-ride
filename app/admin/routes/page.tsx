@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { Pencil, Trash2, Plus, MapPin, ChevronDown, ChevronUp } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -225,24 +225,24 @@ export default function RoutesPage() {
                 <TableRow><TableCell colSpan={7} className="text-center py-8 text-gray-400">No routes found</TableCell></TableRow>
               ) : (
                 routes.map((r) => (
-                  <>
-                    <TableRow key={r._id}>
+                  <React.Fragment key={r._id}>
+                    <TableRow>
                       <TableCell className="font-medium">{r.routeNumber}</TableCell>
                       <TableCell>{r.name}</TableCell>
                       <TableCell className="text-sm">{r.startPoint} → {r.endPoint}</TableCell>
-                      <TableCell className="text-sm">LKR {r.fare}</TableCell>
+                      <TableCell className="text-sm">{r.fare != null ? `LKR ${r.fare}` : '—'}</TableCell>
                       <TableCell>
                         <button
                           onClick={() => setExpandedId(expandedId === r._id ? null : r._id)}
                           className="flex items-center gap-1 text-sm text-blue-600 hover:underline"
                         >
-                          {r.stops.length} stops
+                          {(r.stops ?? []).length} stops
                           {expandedId === r._id ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
                         </button>
                       </TableCell>
                       <TableCell>
                         <Badge variant={r.status === 'active' ? 'success' : 'secondary'}>
-                          {r.status.charAt(0).toUpperCase() + r.status.slice(1)}
+                          {r.status ? r.status.charAt(0).toUpperCase() + r.status.slice(1) : 'Unknown'}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
@@ -271,23 +271,23 @@ export default function RoutesPage() {
                       </TableCell>
                     </TableRow>
                     {expandedId === r._id && (
-                      <TableRow key={`${r._id}-stops`} className="bg-gray-50">
+                      <TableRow className="bg-gray-50">
                         <TableCell colSpan={7} className="py-3 px-6">
                           <div className="flex flex-wrap gap-2">
-                            {r.stops
+                            {(r.stops ?? [])
                               .sort((a, b) => a.order - b.order)
-                              .map((s, i) => (
+                              .map((s, i, arr) => (
                                 <div key={i} className="flex items-center gap-1 text-xs text-gray-600">
                                   <MapPin size={11} className="text-blue-500" />
                                   <span>{s.name}</span>
-                                  {i < r.stops.length - 1 && <span className="text-gray-300 ml-1">›</span>}
+                                  {i < arr.length - 1 && <span className="text-gray-300 ml-1">›</span>}
                                 </div>
                               ))}
                           </div>
                         </TableCell>
                       </TableRow>
                     )}
-                  </>
+                  </React.Fragment>
                 ))
               )}
             </TableBody>

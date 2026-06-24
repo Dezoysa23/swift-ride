@@ -6,7 +6,7 @@ import { stripe } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
   const auth = await getAuthUser(request)
-  if (!auth) {
+  if (!auth || auth.role !== 'passenger') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
   await connectDB()
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'bookingId is required' }, { status: 400 })
   }
 
-  const resolvedCurrency = currency ?? 'usd'
+  const resolvedCurrency = currency ?? 'lkr'
 
   const intent = await stripe.paymentIntents.create({
     amount: Math.round(amount * 100),

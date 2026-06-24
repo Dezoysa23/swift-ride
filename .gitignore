@@ -1,7 +1,11 @@
 # Environment variables (contain secrets)
+.env
 .env.local
 .env.local.backup
 .env.*.local
+
+# Claude Code local settings (may contain credentials)
+.claude/settings.local.json
 
 # Dependencies
 node_modules/
@@ -47,3 +51,12 @@ Thumbs.db
 *.tmp
 *.temp
 *.bak
+
+# Local debug artifacts
+.playwright-mcp/
+fix-cookies.sh
+login-page.png
+login-debug.png
+login-attempt2.png
+after-register.png
+register-filled.png

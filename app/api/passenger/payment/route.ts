@@ -19,10 +19,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { bookingId, confirmPayment } = body as {
-    bookingId?: string
-    confirmPayment?: boolean
-  }
+  const { bookingId } = body as { bookingId?: string }
 
   if (!bookingId) {
     return NextResponse.json({ error: 'bookingId is required' }, { status: 400 })
@@ -31,23 +28,6 @@ export async function POST(request: NextRequest) {
   const booking = await Booking.findOne({ _id: bookingId, passengerId: auth.id })
   if (!booking) {
     return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
-  }
-
-  // If confirmPayment is true, simulate payment confirmation (for demo mode)
-  if (confirmPayment) {
-    booking.paymentStatus = 'paid'
-    booking.status = 'confirmed'
-    await booking.save()
-
-    // Update or create Payment record if stripePaymentIntentId exists
-    if (booking.stripePaymentIntentId) {
-      await Payment.findOneAndUpdate(
-        { stripePaymentIntentId: booking.stripePaymentIntentId },
-        { status: 'succeeded' }
-      )
-    }
-
-    return NextResponse.json({ success: true, data: { bookingId, status: 'confirmed' } })
   }
 
   // If booking already has a payment intent, return its client secret
@@ -69,7 +49,7 @@ export async function POST(request: NextRequest) {
   // Create a new Stripe payment intent
   const intent = await stripe.paymentIntents.create({
     amount: Math.round(booking.fare * 100),
-    currency: 'usd',
+    currency: 'lkr',
     metadata: {
       bookingId: String(booking._id),
       passengerId: auth.id,
@@ -85,7 +65,7 @@ export async function POST(request: NextRequest) {
     passengerId: auth.id,
     bookingId: booking._id,
     amount: booking.fare,
-    currency: 'usd',
+    currency: 'lkr',
     stripePaymentIntentId: intent.id,
     status: 'pending',
   })

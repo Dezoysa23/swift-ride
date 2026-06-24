@@ -28,6 +28,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
+import {
+  LocationBookingFields,
+  type BookingLocationDetails,
+} from '@/components/passenger/location-booking-fields'
 
 interface Stop {
   name: string
@@ -68,6 +72,7 @@ function BookPageInner() {
   const [boardingStop, setBoardingStop] = useState('')
   const [alightingStop, setAlightingStop] = useState('')
   const [seats, setSeats] = useState(1)
+  const [locationDetails, setLocationDetails] = useState<BookingLocationDetails | null>(null)
 
   // Flow state
   const [step, setStep] = useState<'form' | 'payment' | 'success'>('form')
@@ -118,7 +123,14 @@ function BookPageInner() {
       const bookRes = await fetch('/api/passenger/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ routeId, bookingDate, boardingStop, alightingStop, seats }),
+        body: JSON.stringify({
+          routeId,
+          bookingDate,
+          boardingStop,
+          alightingStop,
+          seats,
+          locationDetails,
+        }),
       })
       const bookData = await bookRes.json()
       if (!bookRes.ok) throw new Error(bookData.error || 'Failed to create booking')
@@ -212,7 +224,7 @@ function BookPageInner() {
               <Separator />
               <div className="flex justify-between font-semibold">
                 <span>Total Paid</span>
-                <span className="text-blue-600">${totalFare.toFixed(2)}</span>
+                <span className="text-blue-600">Rs. {totalFare.toFixed(2)}</span>
               </div>
             </div>
             <Button onClick={() => router.push('/passenger/bookings')} className="w-full gap-2">
@@ -249,7 +261,7 @@ function BookPageInner() {
               </div>
             </div>
             <div className="text-right flex-shrink-0">
-              <p className="text-2xl font-bold text-blue-600">${route.fare.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-blue-600">Rs. {route.fare.toFixed(2)}</p>
               <p className="text-xs text-gray-400">per seat</p>
             </div>
           </div>
@@ -318,6 +330,8 @@ function BookPageInner() {
                 </div>
               </div>
 
+              <LocationBookingFields onChange={setLocationDetails} />
+
               <div className="space-y-1.5">
                 <Label htmlFor="seats">Number of Seats</Label>
                 <div className="relative">
@@ -339,13 +353,19 @@ function BookPageInner() {
               <div className="bg-blue-50 rounded-xl p-4 space-y-2">
                 <h3 className="font-medium text-gray-900 text-sm">Fare Summary</h3>
                 <div className="flex justify-between text-sm text-gray-600">
-                  <span>${route.fare.toFixed(2)} × {seats} seat{seats !== 1 ? 's' : ''}</span>
-                  <span>${fare.toFixed(2)}</span>
+                  <span>Rs. {route.fare.toFixed(2)} × {seats} seat{seats !== 1 ? 's' : ''}</span>
+                  <span>Rs. {fare.toFixed(2)}</span>
                 </div>
+                {locationDetails && (
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Route estimate</span>
+                    <span>Rs. {locationDetails.estimatedPrice.toFixed(2)}</span>
+                  </div>
+                )}
                 <Separator />
                 <div className="flex justify-between font-bold text-gray-900">
                   <span>Total</span>
-                  <span className="text-blue-600 text-lg">${fare.toFixed(2)}</span>
+                  <span className="text-blue-600 text-lg">Rs. {fare.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -388,7 +408,7 @@ function BookPageInner() {
               <Separator />
               <div className="flex justify-between font-bold">
                 <span>Amount Due</span>
-                <span className="text-blue-600 text-base">${(totalFare || fare).toFixed(2)}</span>
+                <span className="text-blue-600 text-base">Rs. {(totalFare || fare).toFixed(2)}</span>
               </div>
             </div>
 

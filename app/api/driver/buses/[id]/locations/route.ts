@@ -3,6 +3,27 @@ import { getAuthUser } from '@/lib/auth'
 import { connectDB } from '@/lib/db'
 import User from '@/lib/models/User'
 import Bus from '@/lib/models/Bus'
+import { isLatLng } from '@/lib/maps/google-maps'
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const auth = await getAuthUser(request)
+  if (!auth || auth.role !== 'driver') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  await connectDB()
+
+  const { id } = await params
+
+  const bus = await Bus.findById(id).lean()
+  if (!bus) {
+    return NextResponse.json({ error: 'Bus not found' }, { status: 404 })
+  }
+
+  return NextResponse.json({ currentLocation: bus.currentLocation ?? null })
+}
 
 export async function POST(
   request: NextRequest,
@@ -25,8 +46,8 @@ export async function POST(
   const body = await request.json()
   const { lat, lng } = body
 
-  if (typeof lat !== 'number' || typeof lng !== 'number') {
-    return NextResponse.json({ error: 'lat and lng must be numbers' }, { status: 400 })
+  if (typeof lat !== 'number' || typeof lng !== 'number' || !isLatLng({ lat, lng })) {
+    return NextResponse.json({ error: 'lat and lng must be valid coordinates' }, { status: 400 })
   }
 
   const bus = await Bus.findByIdAndUpdate(

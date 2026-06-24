@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    if (!user.isActive) {
+    if (user.isActive === false) {
       auditLog(user._id.toString(), user.role, 'login_attempt', 'user', 'failure', undefined, { reason: 'account_deactivated' }, request)
       return NextResponse.json({ error: 'Account is deactivated' }, { status: 403 })
     }

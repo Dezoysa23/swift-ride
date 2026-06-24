@@ -31,5 +31,9 @@ const TurnSchema = new Schema<ITurn>(
   { timestamps: true }
 )
 
+TurnSchema.index({ driverId: 1, status: 1 })
+TurnSchema.index({ scheduledDate: 1, status: 1 })
+TurnSchema.index({ busId: 1, status: 1 })
+
 const Turn: Model<ITurn> = mongoose.models.Turn ?? mongoose.model<ITurn>('Turn', TurnSchema)
 export default Turn

@@ -25,7 +25,7 @@ export const validate = {
 
   number: (value: unknown, min: number = 0, max: number = Infinity): boolean => {
     if (typeof value !== 'number') return false
-    return value >= min && value <= max && Number.isInteger(value)
+    return value >= min && value <= max
   },
 
   enum: (value: string, allowedValues: string[]): boolean => {

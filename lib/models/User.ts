@@ -12,8 +12,13 @@ export interface IUser extends Document {
   // Driver fields
   licenseNumber?: string
   assignedBusId?: mongoose.Types.ObjectId
+  assignedRouteId?: mongoose.Types.ObjectId
+  status?: 'available' | 'on_duty' | 'off_duty'
   // Passenger fields
   walletBalance: number
+  // Password reset — TODO: replace console logging with SMTP email (Option A) in a future update
+  resetToken?: string
+  resetTokenExpiry?: Date
   comparePassword(candidate: string): Promise<boolean>
 }
 
@@ -21,14 +26,18 @@ const UserSchema = new Schema<IUser>(
   {
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    password: { type: String, required: true, minlength: 6 },
+    password: { type: String, required: true, minlength: 8 },
     role: { type: String, enum: ['admin', 'driver', 'passenger'], required: true },
     phone: { type: String, trim: true },
     avatar: { type: String },
     isActive: { type: Boolean, default: true },
     licenseNumber: { type: String },
     assignedBusId: { type: Schema.Types.ObjectId, ref: 'Bus' },
+    assignedRouteId: { type: Schema.Types.ObjectId, ref: 'Route' },
+    status: { type: String, enum: ['available', 'on_duty', 'off_duty'] },
     walletBalance: { type: Number, default: 0 },
+    resetToken: { type: String },
+    resetTokenExpiry: { type: Date },
   },
   { timestamps: true }
 )
