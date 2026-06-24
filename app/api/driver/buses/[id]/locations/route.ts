@@ -3,6 +3,7 @@ import { getAuthUser } from '@/lib/auth'
 import { connectDB } from '@/lib/db'
 import User from '@/lib/models/User'
 import Bus from '@/lib/models/Bus'
+import DriverLocation from '@/lib/models/DriverLocation'
 import { isLatLng } from '@/lib/maps/google-maps'
 
 export async function GET(
@@ -50,19 +51,30 @@ export async function POST(
     return NextResponse.json({ error: 'lat and lng must be valid coordinates' }, { status: 400 })
   }
 
-  const bus = await Bus.findByIdAndUpdate(
-    id,
-    {
-      $set: {
-        currentLocation: {
+  const now = new Date()
+
+  const [bus] = await Promise.all([
+    Bus.findByIdAndUpdate(
+      id,
+      { $set: { currentLocation: { lat, lng, updatedAt: now } } },
+      { new: true }
+    ).lean(),
+    // Keep DriverLocation in sync so the admin live map reflects this update
+    DriverLocation.findOneAndUpdate(
+      { driverId: auth.id },
+      {
+        $set: {
           lat,
           lng,
-          updatedAt: new Date(),
+          busId: driver.assignedBusId,
+          routeId: driver.assignedRouteId ?? undefined,
+          lastUpdatedAt: now,
         },
+        $setOnInsert: { status: 'online' },
       },
-    },
-    { new: true }
-  ).lean()
+      { new: true, upsert: true }
+    ).lean(),
+  ])
 
   if (!bus) {
     return NextResponse.json({ error: 'Bus not found' }, { status: 404 })

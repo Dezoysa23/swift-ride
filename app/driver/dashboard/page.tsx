@@ -10,6 +10,8 @@ import { toast } from "sonner"
 import { RouteDetails } from "@/components/driver/route-details"
 import { PassengerList } from "@/components/driver/passenger-list"
 import { LocationUpdater } from "@/components/driver/location-updater"
+import { ActiveTrip } from "@/components/driver/active-trip"
+import type { TripStatus } from "@/components/driver/active-trip"
 import { Bus, Clock, MapPin, Users } from "lucide-react"
 
 interface DriverRoute {
@@ -24,19 +26,43 @@ interface DriverRoute {
   passengerCount: number
 }
 
+interface ActiveBooking {
+  _id: string
+  passengerId: { name?: string; phone?: string } | null
+  pickupAddress?: string
+  pickupLat?: number
+  pickupLng?: number
+  dropoffAddress?: string
+  dropoffLat?: number
+  dropoffLng?: number
+  distanceKm?: number
+  durationMinutes?: number
+  estimatedPrice?: number
+  tripStatus?: TripStatus
+  fare: number
+}
+
 export default function DriverDashboard() {
   const { user } = useAuth()
   const [assignedRoute, setAssignedRoute] = useState<DriverRoute | null>(null)
+  const [activeBooking, setActiveBooking] = useState<ActiveBooking | null>(null)
   const [isOnDuty, setIsOnDuty] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchDriverData = async () => {
       try {
-        const response = await fetch("/api/driver/route")
-        if (response.ok) {
-          const data = await response.json()
+        const [routeRes, bookingRes] = await Promise.all([
+          fetch("/api/driver/route"),
+          fetch("/api/driver/active-booking"),
+        ])
+        if (routeRes.ok) {
+          const data = await routeRes.json()
           setAssignedRoute(data.data ?? null)
+        }
+        if (bookingRes.ok) {
+          const data = await bookingRes.json()
+          setActiveBooking(data.booking ?? null)
         }
       } catch (error) {
         console.error("Failed to fetch driver data:", error)
@@ -164,6 +190,17 @@ export default function DriverDashboard() {
                 </CardContent>
               </Card>
             </div>
+
+            {activeBooking && (
+              <ActiveTrip
+                booking={activeBooking}
+                onStatusChange={(newStatus) =>
+                  setActiveBooking((prev) =>
+                    prev ? { ...prev, tripStatus: newStatus } : prev
+                  )
+                }
+              />
+            )}
 
             <Tabs defaultValue="route" className="w-full">
               <TabsList className="grid w-full grid-cols-3">

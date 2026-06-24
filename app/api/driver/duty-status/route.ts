@@ -3,6 +3,7 @@ import { getAuthUser } from '@/lib/auth'
 import { connectDB } from '@/lib/db'
 import User from '@/lib/models/User'
 import Turn from '@/lib/models/Turn'
+import DriverLocation from '@/lib/models/DriverLocation'
 
 export async function POST(request: NextRequest) {
   const auth = await getAuthUser(request)
@@ -58,6 +59,19 @@ export async function POST(request: NextRequest) {
     scheduledTurn.startTime = new Date()
     await scheduledTurn.save()
 
+    // Mark driver as online in DriverLocation (location coordinates come later via LocationUpdater)
+    await DriverLocation.findOneAndUpdate(
+      { driverId: auth.id },
+      {
+        $set: {
+          status: 'online',
+          busId: driver.assignedBusId ?? undefined,
+          lastUpdatedAt: new Date(),
+        },
+      },
+      { upsert: true }
+    )
+
     const populated = await Turn.findById(scheduledTurn._id)
       .populate('routeId', 'name routeNumber')
       .populate('busId', 'busNumber plateNumber')
@@ -74,6 +88,12 @@ export async function POST(request: NextRequest) {
     activeTurn.status = 'completed'
     activeTurn.endTime = new Date()
     await activeTurn.save()
+
+    // Mark driver offline in DriverLocation
+    await DriverLocation.findOneAndUpdate(
+      { driverId: auth.id },
+      { $set: { status: 'offline', lastUpdatedAt: new Date() } }
+    )
 
     return NextResponse.json({ success: true, data: activeTurn })
   }

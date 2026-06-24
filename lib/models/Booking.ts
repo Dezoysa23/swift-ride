@@ -1,5 +1,21 @@
 import mongoose, { Schema, Document, Model } from 'mongoose'
 
+export type ProximityNotificationState =
+  | 'driver_assigned'
+  | 'driver_on_way'
+  | 'driver_getting_closer'
+  | 'driver_5_min_away'
+  | 'driver_2_min_away'
+  | 'driver_arrived'
+
+export type TripStatus =
+  | 'assigned'
+  | 'on_the_way'
+  | 'arrived'
+  | 'in_progress'
+  | 'completed'
+  | 'cancelled'
+
 export interface IBooking extends Document {
   passengerId: mongoose.Types.ObjectId
   driverId?: mongoose.Types.ObjectId
@@ -23,6 +39,15 @@ export interface IBooking extends Document {
   status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
   paymentStatus: 'pending' | 'paid' | 'refunded'
   stripePaymentIntentId?: string
+  // Level 2: active trip tracking
+  tripStatus?: TripStatus
+  lastProximityNotification?: ProximityNotificationState
+  lastProximityNotificationAt?: Date
+  lastDriverDistanceMeters?: number
+  lastDriverEtaMinutes?: number
+  driverLastLat?: number
+  driverLastLng?: number
+  driverLastUpdatedAt?: Date
 }
 
 const BookingSchema = new Schema<IBooking>(
@@ -57,6 +82,27 @@ const BookingSchema = new Schema<IBooking>(
       default: 'pending',
     },
     stripePaymentIntentId: String,
+    tripStatus: {
+      type: String,
+      enum: ['assigned', 'on_the_way', 'arrived', 'in_progress', 'completed', 'cancelled'],
+    },
+    lastProximityNotification: {
+      type: String,
+      enum: [
+        'driver_assigned',
+        'driver_on_way',
+        'driver_getting_closer',
+        'driver_5_min_away',
+        'driver_2_min_away',
+        'driver_arrived',
+      ],
+    },
+    lastProximityNotificationAt: Date,
+    lastDriverDistanceMeters: Number,
+    lastDriverEtaMinutes: Number,
+    driverLastLat: Number,
+    driverLastLng: Number,
+    driverLastUpdatedAt: Date,
   },
   { timestamps: true }
 )
@@ -67,6 +113,7 @@ BookingSchema.index({ routeId: 1, status: 1 })
 BookingSchema.index({ turnId: 1 })
 BookingSchema.index({ pickupLat: 1, pickupLng: 1 }, { sparse: true })
 BookingSchema.index({ stripePaymentIntentId: 1 }, { sparse: true })
+BookingSchema.index({ tripStatus: 1 }, { sparse: true })
 
 const Booking: Model<IBooking> =
   mongoose.models.Booking ?? mongoose.model<IBooking>('Booking', BookingSchema)

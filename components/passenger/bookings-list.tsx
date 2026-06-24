@@ -8,7 +8,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from "sonner"
-import { Bus, Calendar, Clock, MapPin, QrCode, Badge, TicketIcon, Trash2 } from "lucide-react"
+import { Bus, Calendar, Clock, MapPin, QrCode, Badge, TicketIcon, Trash2, Navigation } from "lucide-react"
 import { Users } from "lucide-react"
 import {
   Dialog,
@@ -233,10 +233,23 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
+              {/* Track driver — available for all active bookings */}
+              {(booking.status === "pending" || booking.status === "confirmed") && (
+                <Button
+                  variant="outline"
+                  className="flex-1 min-w-[110px] border-blue-500/30 text-blue-600 hover:bg-blue-50"
+                  asChild
+                >
+                  <Link href={`/passenger/tracking/${booking._id}`}>
+                    <Navigation className="h-4 w-4 mr-2" />
+                    Track Driver
+                  </Link>
+                </Button>
+              )}
               <Button
                 variant="outline"
-                className="flex-1"
+                className="flex-1 min-w-[110px]"
                 onClick={() => {
                   setSelectedBooking(booking)
                   setIsDialogOpen(true)
