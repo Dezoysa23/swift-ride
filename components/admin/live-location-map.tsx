@@ -344,8 +344,8 @@ export function LiveLocationMap() {
     <div className="space-y-5">
       <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Live Map</h1>
-          <p className="mt-1 text-sm text-gray-500">Drivers, pickups, and active bookings</p>
+          <h1 className="text-2xl font-bold text-foreground">Live Map</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Drivers, pickups, and active bookings</p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <Input
@@ -365,8 +365,8 @@ export function LiveLocationMap() {
         <Card>
           <CardContent className="flex items-center justify-between p-5">
             <div>
-              <p className="text-sm text-gray-500">Online drivers</p>
-              <p className="mt-1 text-3xl font-bold text-gray-900">{data.drivers.length}</p>
+              <p className="text-sm text-muted-foreground">Online drivers</p>
+              <p className="mt-1 text-3xl font-bold text-foreground">{data.drivers.length}</p>
             </div>
             <LocateFixed className="h-8 w-8 text-[#8A9A5B]" />
           </CardContent>
@@ -374,8 +374,8 @@ export function LiveLocationMap() {
         <Card>
           <CardContent className="flex items-center justify-between p-5">
             <div>
-              <p className="text-sm text-gray-500">Active bookings</p>
-              <p className="mt-1 text-3xl font-bold text-gray-900">{data.activeBookings.length}</p>
+              <p className="text-sm text-muted-foreground">Active bookings</p>
+              <p className="mt-1 text-3xl font-bold text-foreground">{data.activeBookings.length}</p>
             </div>
             <Route className="h-8 w-8 text-[#003153]" />
           </CardContent>
@@ -383,8 +383,8 @@ export function LiveLocationMap() {
         <Card>
           <CardContent className="flex items-center justify-between p-5">
             <div>
-              <p className="text-sm text-gray-500">Last refresh</p>
-              <p className="mt-1 text-xl font-bold text-gray-900">{formatTime(new Date().toISOString())}</p>
+              <p className="text-sm text-muted-foreground">Last refresh</p>
+              <p className="mt-1 text-xl font-bold text-foreground">{formatTime(new Date().toISOString())}</p>
             </div>
             <Clock className="h-8 w-8 text-[#F97316]" />
           </CardContent>
@@ -412,25 +412,25 @@ export function LiveLocationMap() {
               </div>
               <div className="max-h-72 space-y-2 overflow-auto pr-1">
                 {filteredDrivers.length === 0 ? (
-                  <p className="rounded-md border border-dashed p-4 text-sm text-gray-500">No drivers found</p>
+                  <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">No drivers found</p>
                 ) : (
                   filteredDrivers.map((driver) => (
                     <button
                       key={driver._id}
-                      className="w-full rounded-md border bg-white p-3 text-left transition hover:border-slate-400"
+                      className="w-full rounded-md border bg-card p-3 text-left transition hover:border-border"
                       onClick={() => focusMap(driver.lat, driver.lng)}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="font-medium text-gray-900">{refName(driver.driverId, "Driver")}</p>
-                          <p className="text-xs text-gray-500">{busLabel(driver.busId)}</p>
+                          <p className="font-medium text-foreground">{refName(driver.driverId, "Driver")}</p>
+                          <p className="text-xs text-muted-foreground">{busLabel(driver.busId)}</p>
                         </div>
                         <Badge variant={driver.status === "on_trip" ? "warning" : "success"}>
                           {driver.status === "on_trip" ? "On trip" : "Online"}
                         </Badge>
                       </div>
-                      <p className="mt-2 text-xs text-gray-500">{routeLabel(driver.routeId)}</p>
-                      <p className="mt-1 text-xs text-gray-400">Updated {formatTime(driver.lastUpdatedAt)}</p>
+                      <p className="mt-2 text-xs text-muted-foreground">{routeLabel(driver.routeId)}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">Updated {formatTime(driver.lastUpdatedAt)}</p>
                     </button>
                   ))
                 )}
@@ -457,12 +457,12 @@ export function LiveLocationMap() {
               </div>
               <div className="max-h-72 space-y-2 overflow-auto pr-1">
                 {filteredBookings.length === 0 ? (
-                  <p className="rounded-md border border-dashed p-4 text-sm text-gray-500">No bookings found</p>
+                  <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">No bookings found</p>
                 ) : (
                   filteredBookings.map((booking) => (
                     <button
                       key={booking._id}
-                      className="w-full rounded-md border bg-white p-3 text-left transition hover:border-slate-400"
+                      className="w-full rounded-md border bg-card p-3 text-left transition hover:border-border"
                       onClick={() => {
                         if (typeof booking.pickupLat === "number" && typeof booking.pickupLng === "number") {
                           focusMap(booking.pickupLat, booking.pickupLng)
@@ -471,14 +471,14 @@ export function LiveLocationMap() {
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="font-medium text-gray-900">{refName(booking.passengerId, "Passenger")}</p>
-                          <p className="text-xs text-gray-500">{routeLabel(booking.routeId)}</p>
+                          <p className="font-medium text-foreground">{refName(booking.passengerId, "Passenger")}</p>
+                          <p className="text-xs text-muted-foreground">{routeLabel(booking.routeId)}</p>
                         </div>
                         <Badge variant={booking.status === "confirmed" ? "success" : "warning"}>
                           {booking.status}
                         </Badge>
                       </div>
-                      <p className="mt-2 line-clamp-2 text-xs text-gray-500">
+                      <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">
                         {booking.pickupAddress ?? "Pickup selected"}
                       </p>
                     </button>
@@ -494,7 +494,7 @@ export function LiveLocationMap() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 text-xs text-gray-500">
+      <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-2">
           <MapPin className="h-3.5 w-3.5 text-[#8A9A5B]" /> Driver online
         </span>

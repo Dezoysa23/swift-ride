@@ -218,7 +218,7 @@ export function ActiveTrip({ booking, onStatusChange }: ActiveTripProps) {
                 Keep trip
               </Button>
               <Button
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs"
+                className="flex-1 bg-destructive hover:bg-destructive/90 text-white text-xs"
                 onClick={() => updateStatus("cancelled")}
                 disabled={isUpdating}
               >

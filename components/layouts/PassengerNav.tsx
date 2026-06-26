@@ -6,6 +6,8 @@ import { MapPin, Calendar, User, LogOut, ChevronDown, Bus, Menu, X } from 'lucid
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Logo } from '@/components/ui/logo'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -45,15 +47,12 @@ export default function PassengerNav() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border shadow-soft">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/passenger" className="flex items-center gap-2.5 flex-shrink-0">
-            <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold text-sm text-white flex-shrink-0">
-              SR
-            </div>
-            <span className="font-semibold text-gray-900 text-base hidden sm:block">Swift Ride</span>
+          <Link href="/passenger" className="flex items-center flex-shrink-0">
+            <Logo wordmarkClassName="hidden sm:block" />
           </Link>
 
           {/* Desktop nav links */}
@@ -64,8 +63,8 @@ export default function PassengerNav() {
                 href={href}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive(href, exact)
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    ? 'bg-coral/10 text-coral'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
                 }`}
               >
                 <Icon size={16} className="flex-shrink-0" />
@@ -74,23 +73,24 @@ export default function PassengerNav() {
             ))}
           </nav>
 
-          {/* Right: user dropdown + mobile hamburger */}
+          {/* Right: theme toggle + user dropdown + mobile hamburger */}
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             {/* User dropdown — desktop */}
             <div className="hidden md:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">
+                  <button className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-accent transition-colors">
                     <Avatar className="w-8 h-8">
                       <AvatarImage src="/api/avatar/me" alt="Passenger" />
-                      <AvatarFallback className="bg-blue-600 text-white text-xs">
+                      <AvatarFallback className="bg-coral text-coral-foreground text-xs">
                         <User size={14} />
                       </AvatarFallback>
                     </Avatar>
-                    <span className="text-sm font-medium text-gray-700 max-w-[120px] truncate">
+                    <span className="text-sm font-medium text-foreground max-w-[120px] truncate">
                       My Account
                     </span>
-                    <ChevronDown size={14} className="text-gray-400" />
+                    <ChevronDown size={14} className="text-muted-foreground" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -104,7 +104,7 @@ export default function PassengerNav() {
                   <DropdownMenuItem
                     onClick={handleLogout}
                     disabled={loggingOut}
-                    className="text-red-600 focus:text-red-600 cursor-pointer"
+                    className="text-destructive focus:text-destructive cursor-pointer"
                   >
                     <LogOut size={14} className="mr-2" />
                     {loggingOut ? 'Logging out…' : 'Logout'}
@@ -115,7 +115,7 @@ export default function PassengerNav() {
 
             {/* Mobile hamburger */}
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="md:hidden p-2 rounded-lg hover:bg-accent transition-colors"
               onClick={() => setMobileOpen((o) => !o)}
               aria-label="Toggle menu"
             >
@@ -126,7 +126,7 @@ export default function PassengerNav() {
 
         {/* Mobile nav drawer */}
         {mobileOpen && (
-          <div className="md:hidden border-t border-gray-100 py-3 space-y-1">
+          <div className="md:hidden border-t border-border py-3 space-y-1">
             {navLinks.map(({ href, label, icon: Icon, exact }) => (
               <Link
                 key={href}
@@ -134,19 +134,19 @@ export default function PassengerNav() {
                 onClick={() => setMobileOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive(href, exact)
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    ? 'bg-coral/10 text-coral'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
                 }`}
               >
                 <Icon size={16} className="flex-shrink-0" />
                 {label}
               </Link>
             ))}
-            <div className="border-t border-gray-100 pt-2 mt-2">
+            <div className="border-t border-border pt-2 mt-2">
               <button
                 onClick={handleLogout}
                 disabled={loggingOut}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 w-full transition-colors"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 w-full transition-colors"
               >
                 <LogOut size={16} className="flex-shrink-0" />
                 {loggingOut ? 'Logging out…' : 'Logout'}

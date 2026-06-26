@@ -76,8 +76,8 @@ export default function ReportsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
-        <p className="text-sm text-gray-500 mt-1">Booking and revenue reports</p>
+        <h1 className="text-2xl font-bold text-foreground">Reports</h1>
+        <p className="text-sm text-muted-foreground mt-1">Booking and revenue reports</p>
       </div>
 
       {/* Filters */}
@@ -119,36 +119,36 @@ export default function ReportsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-6 flex items-center gap-4">
-            <BookOpen size={24} className="text-blue-600" />
+            <BookOpen size={24} className="text-primary" />
             <div>
-              <p className="text-sm text-gray-500">Total Bookings</p>
+              <p className="text-sm text-muted-foreground">Total Bookings</p>
               <p className="text-2xl font-bold">{bookings.length}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 flex items-center gap-4">
-            <DollarSign size={24} className="text-green-600" />
+            <DollarSign size={24} className="text-teal" />
             <div>
-              <p className="text-sm text-gray-500">Total Revenue</p>
+              <p className="text-sm text-muted-foreground">Total Revenue</p>
               <p className="text-2xl font-bold">LKR {totalRevenue.toLocaleString()}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 flex items-center gap-4">
-            <CheckCircle size={24} className="text-emerald-600" />
+            <CheckCircle size={24} className="text-teal" />
             <div>
-              <p className="text-sm text-gray-500">Completed</p>
+              <p className="text-sm text-muted-foreground">Completed</p>
               <p className="text-2xl font-bold">{completed}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 flex items-center gap-4">
-            <XCircle size={24} className="text-red-500" />
+            <XCircle size={24} className="text-destructive" />
             <div>
-              <p className="text-sm text-gray-500">Cancelled</p>
+              <p className="text-sm text-muted-foreground">Cancelled</p>
               <p className="text-2xl font-bold">{cancelled}</p>
             </div>
           </CardContent>
@@ -174,16 +174,16 @@ export default function ReportsPage() {
             </TableHeader>
             <TableBody>
               {loading ? (
-                <TableRow><TableCell colSpan={8} className="text-center py-8 text-gray-400">Loading…</TableCell></TableRow>
+                <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">Loading…</TableCell></TableRow>
               ) : bookings.length === 0 ? (
-                <TableRow><TableCell colSpan={8} className="text-center py-8 text-gray-400">No bookings found</TableCell></TableRow>
+                <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">No bookings found</TableCell></TableRow>
               ) : (
                 bookings.map((b) => (
                   <TableRow key={b._id}>
                     <TableCell className="text-xs">{new Date(b.bookingDate).toLocaleDateString()}</TableCell>
                     <TableCell>
                       <div className="text-sm font-medium">{b.passengerId?.name ?? '—'}</div>
-                      <div className="text-xs text-gray-400">{b.passengerId?.email}</div>
+                      <div className="text-xs text-muted-foreground">{b.passengerId?.email}</div>
                     </TableCell>
                     <TableCell className="text-xs">
                       {b.routeId ? `${b.routeId.routeNumber} — ${b.routeId.name}` : '—'}

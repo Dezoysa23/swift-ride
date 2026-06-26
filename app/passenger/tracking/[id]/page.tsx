@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import { loadGoogleMapsAPI } from "@/utils/google-maps-loader"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Bus3D } from "@/components/ui/bus-3d"
 import {
   MapPin,
   Navigation,
@@ -299,6 +300,25 @@ export default function PassengerTrackingPage() {
                 <p className="text-xs text-white/50 mt-0.5">{distLabel}</p>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── 3D ride preview ─────────────────────────────────────── */}
+      {!isDone && (
+        <div className="px-4 mt-3">
+          <div className="relative h-40 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#111827] to-[#0D1424]">
+            <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-[#F76C3C]/25 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-12 right-4 h-40 w-40 rounded-full bg-[#0FA6A6]/20 blur-3xl" />
+            <Bus3D interactive={false} />
+            <span className="absolute bottom-2 left-3 font-mono-label text-[10px] text-white/40">
+              Your ride
+            </span>
+            {etaLabel && (
+              <span className="absolute bottom-2 right-3 text-xs font-semibold text-[#F5C518]">
+                {etaLabel}
+              </span>
+            )}
           </div>
         </div>
       )}

@@ -7,7 +7,8 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { CardContent, CardFooter } from '@/components/ui/card'
+import { AuthShell } from '@/components/auth/auth-shell'
 
 function ResetPasswordForm() {
   const router = useRouter()
@@ -102,30 +103,18 @@ function ResetPasswordForm() {
 
 export default function ResetPasswordPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-1 text-center">
-          <div className="flex justify-center mb-2">
-            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">SR</span>
-            </div>
-          </div>
-          <CardTitle className="text-2xl font-bold">Set New Password</CardTitle>
-          <CardDescription>Choose a strong password for your account.</CardDescription>
-        </CardHeader>
+    <AuthShell title="Set new password" description="Choose a strong password for your account.">
+      <Suspense fallback={<CardContent><p className="text-sm text-center text-muted-foreground">Loading…</p></CardContent>}>
+        <ResetPasswordForm />
+      </Suspense>
 
-        <Suspense fallback={<CardContent><p className="text-sm text-center text-muted-foreground">Loading…</p></CardContent>}>
-          <ResetPasswordForm />
-        </Suspense>
-
-        <CardFooter className="justify-center pb-4">
-          <p className="text-sm text-muted-foreground">
-            <Link href="/auth/login" className="text-primary hover:underline">
-              Back to sign in
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
-    </div>
+      <CardFooter className="justify-center pb-6">
+        <p className="text-sm text-muted-foreground">
+          <Link href="/auth/login" className="text-primary hover:underline">
+            Back to sign in
+          </Link>
+        </p>
+      </CardFooter>
+    </AuthShell>
   )
 }

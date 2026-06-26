@@ -72,18 +72,18 @@ function BookingCard({
   const canCancel = booking.status === 'pending' || booking.status === 'confirmed'
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-4 hover:shadow-sm transition-shadow">
+    <div className="bg-card rounded-xl border border-border p-5 space-y-4 hover:shadow-sm transition-shadow">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <Bus size={18} className="text-blue-600" />
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <Bus size={18} className="text-primary" />
           </div>
           <div>
-            <p className="font-semibold text-gray-900">
+            <p className="font-semibold text-foreground">
               {booking.routeId?.name ?? 'Unknown Route'}
             </p>
             {booking.routeId?.routeNumber && (
-              <p className="text-xs text-gray-400 font-mono">Route #{booking.routeId.routeNumber}</p>
+              <p className="text-xs text-muted-foreground font-mono">Route #{booking.routeId.routeNumber}</p>
             )}
           </div>
         </div>
@@ -98,30 +98,30 @@ function BookingCard({
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
-        <div className="flex items-center gap-1.5 text-gray-600">
-          <Calendar size={13} className="text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-1.5 text-muted-foreground">
+          <Calendar size={13} className="text-muted-foreground flex-shrink-0" />
           <span>{formatDate(booking.bookingDate)}</span>
         </div>
-        <div className="flex items-center gap-1.5 text-gray-600">
-          <MapPin size={13} className="text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-1.5 text-muted-foreground">
+          <MapPin size={13} className="text-muted-foreground flex-shrink-0" />
           <span className="truncate">
             {booking.boardingStop} → {booking.alightingStop}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 text-gray-600">
-          <Users size={13} className="text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-1.5 text-muted-foreground">
+          <Users size={13} className="text-muted-foreground flex-shrink-0" />
           <span>
             {booking.seats} seat{booking.seats !== 1 ? 's' : ''}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 text-gray-600 font-semibold">
-          <DollarSign size={13} className="text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-1.5 text-muted-foreground font-semibold">
+          <DollarSign size={13} className="text-muted-foreground flex-shrink-0" />
           <span>${booking.fare.toFixed(2)}</span>
         </div>
       </div>
 
       {booking.busId && (
-        <p className="text-xs text-gray-400 flex items-center gap-1">
+        <p className="text-xs text-muted-foreground flex items-center gap-1">
           <Bus size={11} />
           Bus: {booking.busId.busNumber}
         </p>
@@ -132,7 +132,7 @@ function BookingCard({
           <Button
             variant="outline"
             size="sm"
-            className="text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300 gap-1.5"
+            className="text-destructive border-destructive/40 hover:bg-destructive/10 hover:border-destructive/40 gap-1.5"
             onClick={() => onCancel(booking._id)}
           >
             <X size={13} />
@@ -146,10 +146,10 @@ function BookingCard({
 
 function EmptyState({ label }: { label: string }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-      <Calendar size={40} className="mx-auto text-gray-300 mb-3" />
-      <p className="text-gray-500 font-medium">No {label} bookings</p>
-      <p className="text-sm text-gray-400 mt-1">Your {label.toLowerCase()} trips will appear here</p>
+    <div className="bg-card rounded-xl border border-border p-12 text-center">
+      <Calendar size={40} className="mx-auto text-muted-foreground mb-3" />
+      <p className="text-muted-foreground font-medium">No {label} bookings</p>
+      <p className="text-sm text-muted-foreground mt-1">Your {label.toLowerCase()} trips will appear here</p>
     </div>
   )
 }
@@ -202,8 +202,8 @@ export default function BookingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">My Bookings</h1>
-        <p className="text-gray-500 text-sm mt-1">Track and manage all your bus bookings</p>
+        <h1 className="text-2xl font-bold text-foreground">My Bookings</h1>
+        <p className="text-muted-foreground text-sm mt-1">Track and manage all your bus bookings</p>
       </div>
 
       <Tabs defaultValue="upcoming">
@@ -264,7 +264,7 @@ export default function BookingsPage() {
       <Dialog open={!!cancelId} onOpenChange={(open) => !open && setCancelId(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-red-600">
+            <DialogTitle className="flex items-center gap-2 text-destructive">
               <AlertCircle size={20} />
               Cancel Booking
             </DialogTitle>

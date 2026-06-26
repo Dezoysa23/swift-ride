@@ -162,10 +162,10 @@ export function PassengerList({ routeId }: PassengerListProps) {
                     <div
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         passenger.status === "checked_in"
-                          ? "bg-green-100 text-green-800"
+                          ? "bg-teal/15 text-teal"
                           : passenger.status === "cancelled"
-                            ? "bg-red-100 text-red-800"
-                            : "bg-blue-100 text-blue-800"
+                            ? "bg-destructive/10 text-destructive"
+                            : "bg-primary/10 text-primary"
                       }`}
                     >
                       {passenger.status === "checked_in"
@@ -216,10 +216,10 @@ export function PassengerList({ routeId }: PassengerListProps) {
                 <div
                   className={`mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                     selectedPassenger.status === "checked_in"
-                      ? "bg-green-100 text-green-800"
+                      ? "bg-teal/15 text-teal"
                       : selectedPassenger.status === "cancelled"
-                        ? "bg-red-100 text-red-800"
-                        : "bg-blue-100 text-blue-800"
+                        ? "bg-destructive/10 text-destructive"
+                        : "bg-primary/10 text-primary"
                   }`}
                 >
                   {selectedPassenger.status === "checked_in"

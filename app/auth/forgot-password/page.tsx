@@ -6,7 +6,8 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { CardContent, CardFooter } from '@/components/ui/card'
+import { AuthShell } from '@/components/auth/auth-shell'
 
 export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false)
@@ -33,23 +34,15 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-1 text-center">
-          <div className="flex justify-center mb-2">
-            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">SR</span>
-            </div>
-          </div>
-          <CardTitle className="text-2xl font-bold">Forgot Password</CardTitle>
-          <CardDescription>
-            {submitted
-              ? 'Check the server console for your reset link.'
-              : "Enter your email and we'll log a reset link to the server console."}
-          </CardDescription>
-        </CardHeader>
-
-        {submitted ? (
+    <AuthShell
+      title="Forgot password"
+      description={
+        submitted
+          ? 'Check the server console for your reset link.'
+          : "Enter your email and we'll log a reset link to the server console."
+      }
+    >
+      {submitted ? (
           <CardContent className="space-y-4 text-center">
             <p className="text-sm text-muted-foreground">
               The reset link expires in <span className="font-medium">10 minutes</span>.
@@ -87,14 +80,13 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
-        <CardFooter className="justify-center pb-4">
-          <p className="text-sm text-muted-foreground">
-            <Link href="/auth/login" className="text-primary hover:underline">
-              Back to sign in
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
-    </div>
+      <CardFooter className="justify-center pb-6">
+        <p className="text-sm text-muted-foreground">
+          <Link href="/auth/login" className="text-primary hover:underline">
+            Back to sign in
+          </Link>
+        </p>
+      </CardFooter>
+    </AuthShell>
   )
 }

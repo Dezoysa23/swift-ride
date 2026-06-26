@@ -125,13 +125,13 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
-        <p className="text-sm text-gray-500 mt-1">Manage your account settings</p>
+        <h1 className="text-2xl font-bold text-foreground">My Profile</h1>
+        <p className="text-sm text-muted-foreground mt-1">Manage your account settings</p>
       </div>
 
       {/* Profile summary banner */}
       {loading ? (
-        <div className="flex items-center gap-4 bg-white rounded-xl border border-gray-200 p-5">
+        <div className="flex items-center gap-4 bg-card rounded-xl border border-border p-5">
           <Skeleton className="w-16 h-16 rounded-full" />
           <div className="space-y-2">
             <Skeleton className="h-5 w-40" />
@@ -139,26 +139,26 @@ export default function ProfilePage() {
           </div>
         </div>
       ) : profile && (
-        <div className="flex items-center gap-4 bg-white rounded-xl border border-gray-200 p-5">
+        <div className="flex items-center gap-4 bg-card rounded-xl border border-border p-5">
           <Avatar className="w-16 h-16 text-lg">
             {profile.avatar ? (
               <AvatarImage src={profile.avatar} alt={profile.name} />
             ) : null}
-            <AvatarFallback className="bg-blue-600 text-white font-semibold">
+            <AvatarFallback className="bg-primary text-white font-semibold">
               {getInitials(profile.name)}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <h2 className="font-semibold text-gray-900 text-lg truncate">{profile.name}</h2>
-            <p className="text-sm text-gray-500 truncate">{profile.email}</p>
-            <p className="text-xs text-gray-400 capitalize mt-0.5">{profile.role}</p>
+            <h2 className="font-semibold text-foreground text-lg truncate">{profile.name}</h2>
+            <p className="text-sm text-muted-foreground truncate">{profile.email}</p>
+            <p className="text-xs text-muted-foreground capitalize mt-0.5">{profile.role}</p>
           </div>
           <div className="text-right flex-shrink-0">
-            <div className="flex items-center gap-1.5 text-green-600 font-semibold">
+            <div className="flex items-center gap-1.5 text-teal font-semibold">
               <Wallet size={16} />
               <span>${profile.walletBalance.toFixed(2)}</span>
             </div>
-            <p className="text-xs text-gray-400 mt-0.5">Wallet Balance</p>
+            <p className="text-xs text-muted-foreground mt-0.5">Wallet Balance</p>
           </div>
         </div>
       )}
@@ -188,7 +188,7 @@ export default function ProfilePage() {
                   <div className="space-y-1.5">
                     <Label htmlFor="name">Full Name</Label>
                     <div className="relative">
-                      <User size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                      <User size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                       <Input
                         id="name"
                         value={name}
@@ -203,21 +203,21 @@ export default function ProfilePage() {
                   <div className="space-y-1.5">
                     <Label htmlFor="email">Email Address</Label>
                     <div className="relative">
-                      <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                      <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                       <Input
                         id="email"
                         value={profile?.email ?? ''}
                         disabled
-                        className="pl-9 bg-gray-50 text-gray-400 cursor-not-allowed"
+                        className="pl-9 bg-muted text-muted-foreground cursor-not-allowed"
                       />
                     </div>
-                    <p className="text-xs text-gray-400">Email cannot be changed</p>
+                    <p className="text-xs text-muted-foreground">Email cannot be changed</p>
                   </div>
 
                   <div className="space-y-1.5">
                     <Label htmlFor="phone">Phone Number</Label>
                     <div className="relative">
-                      <Phone size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                      <Phone size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                       <Input
                         id="phone"
                         value={phone}
@@ -232,14 +232,14 @@ export default function ProfilePage() {
 
                   <div className="space-y-1.5">
                     <Label>Wallet Balance</Label>
-                    <div className="flex items-center gap-2 px-3 py-2.5 bg-green-50 rounded-lg border border-green-200">
-                      <Wallet size={15} className="text-green-600" />
-                      <span className="font-semibold text-green-700">
+                    <div className="flex items-center gap-2 px-3 py-2.5 bg-teal/15 rounded-lg border border-teal/40">
+                      <Wallet size={15} className="text-teal" />
+                      <span className="font-semibold text-teal">
                         ${profile?.walletBalance.toFixed(2) ?? '0.00'}
                       </span>
-                      <span className="text-xs text-green-600 ml-1">Available</span>
+                      <span className="text-xs text-teal ml-1">Available</span>
                     </div>
-                    <p className="text-xs text-gray-400">Wallet balance is managed by your account</p>
+                    <p className="text-xs text-muted-foreground">Wallet balance is managed by your account</p>
                   </div>
 
                   <Button type="submit" disabled={saving} className="w-full gap-2">
@@ -267,7 +267,7 @@ export default function ProfilePage() {
                 <div className="space-y-1.5">
                   <Label htmlFor="currentPw">Current Password</Label>
                   <div className="relative">
-                    <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                     <Input
                       id="currentPw"
                       type={showCurrent ? 'text' : 'password'}
@@ -280,7 +280,7 @@ export default function ProfilePage() {
                     <button
                       type="button"
                       onClick={() => setShowCurrent((v) => !v)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showCurrent ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
@@ -290,7 +290,7 @@ export default function ProfilePage() {
                 <div className="space-y-1.5">
                   <Label htmlFor="newPw">New Password</Label>
                   <div className="relative">
-                    <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                     <Input
                       id="newPw"
                       type={showNew ? 'text' : 'password'}
@@ -304,7 +304,7 @@ export default function ProfilePage() {
                     <button
                       type="button"
                       onClick={() => setShowNew((v) => !v)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showNew ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
@@ -314,7 +314,7 @@ export default function ProfilePage() {
                 <div className="space-y-1.5">
                   <Label htmlFor="confirmPw">Confirm New Password</Label>
                   <div className="relative">
-                    <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                     <Input
                       id="confirmPw"
                       type={showConfirm ? 'text' : 'password'}
@@ -327,7 +327,7 @@ export default function ProfilePage() {
                     <button
                       type="button"
                       onClick={() => setShowConfirm((v) => !v)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showConfirm ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>

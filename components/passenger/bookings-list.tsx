@@ -152,10 +152,10 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <div className={`px-2 py-1 text-xs font-semibold rounded-full ${booking.status === "confirmed" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}>
+                  <div className={`px-2 py-1 text-xs font-semibold rounded-full ${booking.status === "confirmed" ? "bg-teal/15 text-teal" : "bg-muted text-foreground"}`}>
                     {booking.status}
                   </div>
-                  <div className={`px-2 py-1 text-xs font-semibold rounded-full ${booking.paymentStatus === "completed" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                  <div className={`px-2 py-1 text-xs font-semibold rounded-full ${booking.paymentStatus === "completed" ? "bg-teal/15 text-teal" : "bg-destructive/10 text-destructive"}`}>
                     {booking.paymentStatus}
                   </div>
                 </div>
@@ -185,10 +185,10 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
                 </div>
               </div>
               <div className="flex gap-2">
-                <div className={`px-2 py-1 text-xs font-semibold rounded-full ${booking.status === "confirmed" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}>
+                <div className={`px-2 py-1 text-xs font-semibold rounded-full ${booking.status === "confirmed" ? "bg-teal/15 text-teal" : "bg-muted text-foreground"}`}>
                   {booking.status}
                 </div>
-                <div className={`px-2 py-1 text-xs font-semibold rounded-full ${booking.paymentStatus === "completed" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                <div className={`px-2 py-1 text-xs font-semibold rounded-full ${booking.paymentStatus === "completed" ? "bg-teal/15 text-teal" : "bg-destructive/10 text-destructive"}`}>
                   {booking.paymentStatus}
                 </div>
               </div>
@@ -222,7 +222,7 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-red-500 hover:text-red-600 hover:bg-red-50"
+                  className="text-destructive hover:text-destructive hover:bg-destructive/10"
                   onClick={() => confirmDelete(booking._id)}
                 >
                   <Trash2 className="w-4 h-4" />
@@ -238,7 +238,7 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
               {(booking.status === "pending" || booking.status === "confirmed") && (
                 <Button
                   variant="outline"
-                  className="flex-1 min-w-[110px] border-blue-500/30 text-blue-600 hover:bg-blue-50"
+                  className="flex-1 min-w-[110px] border-primary text-primary hover:bg-primary/10"
                   asChild
                 >
                   <Link href={`/passenger/tracking/${booking._id}`}>
@@ -261,7 +261,7 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
               {booking.status === "pending" && booking.paymentStatus === "pending" && (
                 <Button
                   variant="default"
-                  className="flex-1 bg-green-600 hover:bg-green-700"
+                  className="flex-1 bg-teal hover:bg-teal/90"
                   onClick={async () => {
                     try {
                       const response = await fetch(`/api/passenger/bookings/${booking._id}/confirm`, {
@@ -315,7 +315,7 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
                 </DialogDescription>
               </DialogHeader>
 
-              <div className="bg-white rounded-lg p-6 space-y-4 border-2 border-dashed border-gray-200 print:border-none">
+              <div className="bg-card rounded-lg p-6 space-y-4 border-2 border-dashed border-border print:border-none">
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-bold text-lg">SwiftRide</h3>
@@ -332,24 +332,24 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <div className="text-sm text-muted-foreground">From</div>
-                    <div className="font-semibold text-black">{selectedBooking.route.origin}</div>
+                    <div className="font-semibold text-foreground">{selectedBooking.route.origin}</div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">To</div>
-                    <div className="font-semibold text-black">{selectedBooking.route.destination}</div>
+                    <div className="font-semibold text-foreground">{selectedBooking.route.destination}</div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <div className="text-sm text-muted-foreground">Date</div>
-                    <div className="font-semibold text-black">
+                    <div className="font-semibold text-foreground">
                       {new Date(selectedBooking.route.turns[selectedBooking.turnIndex].departureTime).toLocaleDateString()}
                     </div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Time</div>
-                    <div className="font-semibold text-black">
+                    <div className="font-semibold text-foreground">
                       {new Date(selectedBooking.route.turns[selectedBooking.turnIndex].departureTime).toLocaleTimeString([], {
                         hour: '2-digit',
                         minute: '2-digit'
@@ -361,16 +361,16 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <div className="text-sm text-muted-foreground">Passengers</div>
-                    <div className="font-semibold text-black">{selectedBooking.passengers}</div>
+                    <div className="font-semibold text-foreground">{selectedBooking.passengers}</div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Total Fare</div>
-                    <div className="font-semibold text-black">Rs. {selectedBooking.totalFare.toFixed(2)}</div>
+                    <div className="font-semibold text-foreground">Rs. {selectedBooking.totalFare.toFixed(2)}</div>
                   </div>
                 </div>
 
                 <div className="flex justify-center">
-                  <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="bg-muted p-4 rounded-lg">
                     <QRCodeSVG
                       value={JSON.stringify({
                         id: selectedBooking._id,
@@ -397,7 +397,7 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
                 <Button
                   onClick={handlePrint}
                   disabled={isPrinting}
-                  className="bg-green-600 hover:bg-green-700"
+                  className="bg-teal hover:bg-teal/90"
                 >
                   <Printer className="h-4 w-4 mr-2" />
                   {isPrinting ? 'Printing...' : 'Print Ticket'}

@@ -180,7 +180,7 @@ export function BookingReports() {
 
           <div className="space-y-2">
             <Label>End Date</Label>
-            <DatePicker selected={endDate} onSelect={setEndDate} disabled={(date) => date > new Date()} />
+            <DatePicker selected={endDate} onSelect={setEndDate} max={new Date()} />
           </div>
 
           <div className="self-end">

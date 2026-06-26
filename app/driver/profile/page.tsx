@@ -193,8 +193,8 @@ export default function DriverProfilePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
-        <p className="text-gray-500 text-sm mt-1">Manage your account and duty settings</p>
+        <h1 className="text-2xl font-bold text-foreground">Profile</h1>
+        <p className="text-muted-foreground text-sm mt-1">Manage your account and duty settings</p>
       </div>
 
       <Tabs defaultValue="profile">
@@ -220,7 +220,7 @@ export default function DriverProfilePage() {
               <div className="flex items-center gap-4">
                 <Avatar className="w-16 h-16">
                   <AvatarImage src={profile?.avatar || ''} alt={profile?.name} />
-                  <AvatarFallback className="bg-blue-600 text-white text-lg font-bold">
+                  <AvatarFallback className="bg-primary text-white text-lg font-bold">
                     {initials}
                   </AvatarFallback>
                 </Avatar>
@@ -255,7 +255,7 @@ export default function DriverProfilePage() {
                     id="email"
                     value={profile?.email || ''}
                     disabled
-                    className="mt-1 bg-gray-50"
+                    className="mt-1 bg-muted"
                   />
                 </div>
                 <div>
@@ -285,11 +285,11 @@ export default function DriverProfilePage() {
               </div>
 
               {profile?.assignedBusId && (
-                <div className="p-3 rounded-lg bg-blue-50 border border-blue-100 flex items-center gap-3">
-                  <Bus size={16} className="text-blue-600 flex-shrink-0" />
+                <div className="p-3 rounded-lg bg-primary/10 border border-primary flex items-center gap-3">
+                  <Bus size={16} className="text-primary flex-shrink-0" />
                   <div>
-                    <p className="text-xs text-blue-600 font-medium">Assigned Bus</p>
-                    <p className="text-sm font-semibold text-blue-900">
+                    <p className="text-xs text-primary font-medium">Assigned Bus</p>
+                    <p className="text-sm font-semibold text-primary">
                       {profile.assignedBusId.busNumber} — {profile.assignedBusId.model} (
                       {profile.assignedBusId.plateNumber})
                     </p>
@@ -318,31 +318,31 @@ export default function DriverProfilePage() {
               <div
                 className={`rounded-xl p-6 border-2 flex items-center justify-between transition-colors ${
                   activeTurn
-                    ? 'bg-green-50 border-green-300'
-                    : 'bg-gray-50 border-gray-200'
+                    ? 'bg-teal/15 border-teal/40'
+                    : 'bg-muted border-border'
                 }`}
               >
                 <div className="flex items-center gap-4">
                   <div
                     className={`w-14 h-14 rounded-full flex items-center justify-center ${
-                      activeTurn ? 'bg-green-100' : 'bg-gray-200'
+                      activeTurn ? 'bg-teal/15' : 'bg-muted'
                     }`}
                   >
                     {activeTurn ? (
-                      <CheckCircle2 className="text-green-600" size={28} />
+                      <CheckCircle2 className="text-teal" size={28} />
                     ) : (
-                      <XCircle className="text-gray-400" size={28} />
+                      <XCircle className="text-muted-foreground" size={28} />
                     )}
                   </div>
                   <div>
                     <p
                       className={`text-2xl font-extrabold tracking-wide ${
-                        activeTurn ? 'text-green-700' : 'text-gray-500'
+                        activeTurn ? 'text-teal' : 'text-muted-foreground'
                       }`}
                     >
                       {activeTurn ? 'ON DUTY' : 'OFF DUTY'}
                     </p>
-                    <p className="text-sm text-gray-500 mt-0.5">
+                    <p className="text-sm text-muted-foreground mt-0.5">
                       {activeTurn
                         ? 'Your shift is currently active'
                         : 'Toggle to start your shift'}
@@ -360,33 +360,33 @@ export default function DriverProfilePage() {
               {/* Active turn details */}
               {activeTurn && (
                 <div className="space-y-3">
-                  <p className="text-sm font-semibold text-gray-700">Current Turn Details</p>
+                  <p className="text-sm font-semibold text-muted-foreground">Current Turn Details</p>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white border border-gray-100">
-                      <MapPin size={16} className="text-blue-600 flex-shrink-0" />
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-card border border-border">
+                      <MapPin size={16} className="text-primary flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-gray-500">Route</p>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-xs text-muted-foreground">Route</p>
+                        <p className="text-sm font-medium text-foreground">
                           {activeTurn.routeId
                             ? `${activeTurn.routeId.routeNumber} — ${activeTurn.routeId.name}`
                             : 'N/A'}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white border border-gray-100">
-                      <Bus size={16} className="text-blue-600 flex-shrink-0" />
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-card border border-border">
+                      <Bus size={16} className="text-primary flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-gray-500">Bus</p>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-xs text-muted-foreground">Bus</p>
+                        <p className="text-sm font-medium text-foreground">
                           {activeTurn.busId?.busNumber || 'N/A'}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white border border-gray-100">
-                      <Clock size={16} className="text-blue-600 flex-shrink-0" />
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-card border border-border">
+                      <Clock size={16} className="text-primary flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-gray-500">Started At</p>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-xs text-muted-foreground">Started At</p>
+                        <p className="text-sm font-medium text-foreground">
                           {activeTurn.startTime
                             ? new Date(activeTurn.startTime).toLocaleTimeString('en-US', {
                                 hour: '2-digit',
@@ -408,7 +408,7 @@ export default function DriverProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
-                <Lock size={16} className="text-blue-600" />
+                <Lock size={16} className="text-primary" />
                 Change Password
               </CardTitle>
               <CardDescription>Update your account password</CardDescription>

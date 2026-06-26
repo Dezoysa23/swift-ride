@@ -167,8 +167,8 @@ export default function DriversPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Drivers</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage your drivers</p>
+          <h1 className="text-2xl font-bold text-foreground">Drivers</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage your drivers</p>
         </div>
         <Button onClick={openAdd}><Plus size={16} className="mr-2" /> Add Driver</Button>
       </div>
@@ -190,9 +190,9 @@ export default function DriversPage() {
             </TableHeader>
             <TableBody>
               {loading ? (
-                <TableRow><TableCell colSpan={7} className="text-center py-8 text-gray-400">Loading…</TableCell></TableRow>
+                <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">Loading…</TableCell></TableRow>
               ) : drivers.length === 0 ? (
-                <TableRow><TableCell colSpan={7} className="text-center py-8 text-gray-400">No drivers found</TableCell></TableRow>
+                <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">No drivers found</TableCell></TableRow>
               ) : (
                 drivers.map((d) => (
                   <TableRow key={d._id}>
@@ -203,7 +203,7 @@ export default function DriversPage() {
                     <TableCell className="text-sm">
                       {d.assignedBusId
                         ? <span className="font-medium">{d.assignedBusId.busNumber}</span>
-                        : <span className="text-gray-400">Unassigned</span>}
+                        : <span className="text-muted-foreground">Unassigned</span>}
                     </TableCell>
                     <TableCell>
                       <Badge variant={d.isActive ? 'success' : 'secondary'}>
@@ -222,13 +222,13 @@ export default function DriversPage() {
                           size="sm"
                           variant="outline"
                           onClick={() => handleToggleActive(d)}
-                          className={d.isActive ? 'text-orange-600' : 'text-green-600'}
+                          className={d.isActive ? 'text-coral' : 'text-teal'}
                         >
                           {d.isActive ? 'Deactivate' : 'Activate'}
                         </Button>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
+                            <Button size="sm" variant="outline" className="text-destructive hover:text-destructive">
                               <Trash2 size={14} />
                             </Button>
                           </AlertDialogTrigger>
@@ -241,7 +241,7 @@ export default function DriversPage() {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={() => handleDelete(d._id)} className="bg-red-600 hover:bg-red-700">
+                              <AlertDialogAction onClick={() => handleDelete(d._id)} className="bg-destructive hover:bg-destructive/90">
                                 Remove
                               </AlertDialogAction>
                             </AlertDialogFooter>

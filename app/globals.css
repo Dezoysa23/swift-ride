@@ -4,58 +4,91 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Surfaces — warm porcelain canvas, deep-teal ink */
+    --background: 40 33% 96%;
+    --foreground: 196 52% 15%;
+    --card: 40 40% 99%;
+    --card-foreground: 196 52% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --popover-foreground: 196 52% 15%;
+
+    /* Brand action — Sunset Coral */
+    --primary: 15 92% 60%;
+    --primary-foreground: 40 33% 98%;
+
+    /* Neutrals (warm) */
+    --secondary: 40 24% 92%;
+    --secondary-foreground: 196 52% 18%;
+    --muted: 40 22% 93%;
+    --muted-foreground: 196 14% 42%;
+    --accent: 180 26% 91%;
+    --accent-foreground: 196 52% 18%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 40 33% 98%;
+
+    --border: 196 18% 86%;
+    --input: 196 18% 86%;
+    --ring: 15 92% 60%;
+
+    /* Accent trio — used deliberately for highlights, icons, charts */
+    --coral: 15 92% 60%;
+    --coral-foreground: 40 33% 98%;
+    --teal: 180 80% 33%;
+    --teal-foreground: 40 33% 98%;
+    --gold: 40 92% 56%;
+    --gold-foreground: 196 52% 15%;
+
+    --radius: 0.9rem;
+
+    --chart-1: 15 92% 60%;
+    --chart-2: 180 80% 33%;
+    --chart-3: 40 92% 56%;
+    --chart-4: 196 52% 26%;
+    --chart-5: 15 72% 76%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Surfaces — deep slate-teal */
+    --background: 196 50% 11%;
+    --foreground: 180 28% 92%;
+    --card: 196 42% 14%;
+    --card-foreground: 180 28% 92%;
+    --popover: 196 44% 13%;
+    --popover-foreground: 180 28% 92%;
+
+    /* Brand action — brighter coral on dark */
+    --primary: 17 100% 67%;
+    --primary-foreground: 196 52% 12%;
+
+    /* Neutrals */
+    --secondary: 196 28% 20%;
+    --secondary-foreground: 180 28% 92%;
+    --muted: 196 26% 19%;
+    --muted-foreground: 180 14% 64%;
+    --accent: 180 28% 22%;
+    --accent-foreground: 180 28% 92%;
+
+    --destructive: 0 62% 47%;
+    --destructive-foreground: 180 28% 92%;
+
+    --border: 196 24% 24%;
+    --input: 196 24% 24%;
+    --ring: 17 100% 67%;
+
+    /* Accent trio */
+    --coral: 17 100% 67%;
+    --coral-foreground: 196 52% 12%;
+    --teal: 180 62% 50%;
+    --teal-foreground: 196 52% 12%;
+    --gold: 41 100% 66%;
+    --gold-foreground: 196 52% 12%;
+
+    --chart-1: 17 100% 67%;
+    --chart-2: 180 62% 50%;
+    --chart-3: 41 100% 66%;
+    --chart-4: 180 40% 70%;
+    --chart-5: 15 80% 78%;
   }
 }
 
@@ -63,7 +96,36 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: 'ss01', 'cv01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background: hsl(var(--coral) / 0.22);
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display), 'Plus Jakarta Sans', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  /* Mono eyebrow / label text */
+  .font-mono-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  /* Gradient brand text */
+  .text-gradient-brand {
+    background: linear-gradient(100deg, hsl(var(--coral)), hsl(var(--teal)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }

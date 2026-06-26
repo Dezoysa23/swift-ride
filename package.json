@@ -22,8 +22,11 @@
     "@radix-ui/react-switch": "^1.1.2",
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.4",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
     "@stripe/react-stripe-js": "^6.6.0",
     "@stripe/stripe-js": "^4.4.0",
+    "@types/three": "^0.184.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -38,7 +41,8 @@
     "recharts": "^3.8.1",
     "sonner": "^1.7.1",
     "stripe": "^17.4.0",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^2.5.4",
+    "three": "^0.185.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.0",

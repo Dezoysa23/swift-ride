@@ -82,8 +82,8 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-sm text-gray-500 mt-1">System configuration and account settings</p>
+        <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+        <p className="text-sm text-muted-foreground mt-1">System configuration and account settings</p>
       </div>
 
       <Tabs defaultValue="system">
@@ -100,7 +100,7 @@ export default function SettingsPage() {
             </CardHeader>
             <CardContent className="space-y-5">
               {settingsLoading ? (
-                <p className="text-sm text-gray-400">Loading settings…</p>
+                <p className="text-sm text-muted-foreground">Loading settings…</p>
               ) : (
                 <>
                   <div className="grid grid-cols-2 gap-4">

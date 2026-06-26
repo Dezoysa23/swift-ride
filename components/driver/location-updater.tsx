@@ -338,7 +338,7 @@ export function LocationUpdater({ routeId, busId, isOnDuty }: LocationUpdaterPro
       </div>
 
       {!isOnDuty && (
-        <div className="p-4 border rounded-md bg-yellow-50 text-yellow-800">
+        <div className="p-4 border rounded-md bg-gold/20 text-gold">
           <p className="text-sm font-medium flex items-center">
             <MapPin className="mr-2 h-4 w-4" />
             You must be on duty to update your location.

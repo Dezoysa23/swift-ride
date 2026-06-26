@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { Logo } from '@/components/ui/logo'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -68,21 +70,14 @@ export default function DriverSidebar() {
     .slice(0, 2)
 
   return (
-    <aside className="flex flex-col w-64 h-screen bg-slate-800 text-white flex-shrink-0">
+    <aside className="flex flex-col w-64 h-screen bg-[#0e2730] text-white flex-shrink-0">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-700">
-        <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold text-sm flex-shrink-0">
-          SR
-        </div>
-        <div className="flex flex-col">
-          <span className="font-semibold text-base leading-tight">Swift Ride</span>
-          <Badge
-            variant="secondary"
-            className="mt-0.5 text-[10px] px-1.5 py-0 h-4 bg-blue-500/20 text-blue-300 border-blue-500/30 w-fit"
-          >
-            Driver
-          </Badge>
-        </div>
+      <div className="flex items-center justify-between gap-2 px-5 py-5 border-b border-white/10">
+        <Link href="/driver" className="flex items-center gap-2.5 min-w-0">
+          <Logo wordmarkClassName="text-white text-base" />
+          <Badge variant="teal" className="hidden xl:inline-flex">Driver</Badge>
+        </Link>
+        <ThemeToggle onDark />
       </div>
 
       {/* Navigation */}
@@ -95,8 +90,8 @@ export default function DriverSidebar() {
               href={href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 active
-                  ? 'bg-blue-600 text-white'
-                  : 'text-slate-300 hover:bg-slate-700 hover:text-white'
+                  ? 'bg-coral text-coral-foreground shadow-glow-coral'
+                  : 'text-white/70 hover:bg-white/10 hover:text-white'
               }`}
             >
               <Icon size={18} className="flex-shrink-0" />
@@ -107,19 +102,19 @@ export default function DriverSidebar() {
       </nav>
 
       {/* User at bottom */}
-      <div className="border-t border-slate-700 px-3 py-3">
+      <div className="border-t border-white/10 px-3 py-3">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-slate-700 transition-colors">
+            <button className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-white/10 transition-colors">
               <Avatar className="w-8 h-8">
                 <AvatarImage src={driverAvatar} alt={driverName} />
-                <AvatarFallback className="bg-blue-600 text-white text-xs">{initials}</AvatarFallback>
+                <AvatarFallback className="bg-coral text-coral-foreground text-xs">{initials}</AvatarFallback>
               </Avatar>
               <div className="flex-1 text-left min-w-0">
                 <p className="text-sm font-medium text-white truncate">{driverName}</p>
-                <p className="text-xs text-slate-400 truncate">Driver</p>
+                <p className="text-xs text-white/50 truncate">Driver</p>
               </div>
-              <ChevronDown size={14} className="text-slate-400 flex-shrink-0" />
+              <ChevronDown size={14} className="text-white/50 flex-shrink-0" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
@@ -133,7 +128,7 @@ export default function DriverSidebar() {
             <DropdownMenuItem
               onClick={handleLogout}
               disabled={loggingOut}
-              className="text-red-600 focus:text-red-600 cursor-pointer"
+              className="text-destructive focus:text-destructive cursor-pointer"
             >
               <LogOut size={14} className="mr-2" />
               {loggingOut ? 'Logging out…' : 'Logout'}

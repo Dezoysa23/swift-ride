@@ -146,8 +146,8 @@ export default function DriverBusPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <Bus className="mx-auto text-gray-300 mb-3" size={40} />
-          <p className="text-gray-500 text-sm">{error || 'No bus assigned to your account'}</p>
+          <Bus className="mx-auto text-muted-foreground mb-3" size={40} />
+          <p className="text-muted-foreground text-sm">{error || 'No bus assigned to your account'}</p>
         </div>
       </div>
     )
@@ -157,8 +157,8 @@ export default function DriverBusPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">My Bus</h1>
-          <p className="text-gray-500 text-sm mt-1">Assigned vehicle information</p>
+          <h1 className="text-2xl font-bold text-foreground">My Bus</h1>
+          <p className="text-muted-foreground text-sm mt-1">Assigned vehicle information</p>
         </div>
         <Button variant="outline" size="sm" onClick={loadBus} disabled={loading}>
           <RefreshCw size={14} className="mr-1.5" />
@@ -171,8 +171,8 @@ export default function DriverBusPage() {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <Bus className="text-blue-600" size={24} />
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Bus className="text-primary" size={24} />
               </div>
               <div>
                 <CardTitle className="text-xl">{bus.busNumber}</CardTitle>
@@ -187,20 +187,20 @@ export default function DriverBusPage() {
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
-              <p className="text-xs text-gray-500 mb-0.5">Model</p>
-              <p className="text-sm font-semibold text-gray-900">{bus.model}</p>
+              <p className="text-xs text-muted-foreground mb-0.5">Model</p>
+              <p className="text-sm font-semibold text-foreground">{bus.model}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-0.5">Year</p>
-              <p className="text-sm font-semibold text-gray-900">{bus.year}</p>
+              <p className="text-xs text-muted-foreground mb-0.5">Year</p>
+              <p className="text-sm font-semibold text-foreground">{bus.year}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-0.5">Capacity</p>
-              <p className="text-sm font-semibold text-gray-900">{bus.capacity} seats</p>
+              <p className="text-xs text-muted-foreground mb-0.5">Capacity</p>
+              <p className="text-sm font-semibold text-foreground">{bus.capacity} seats</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-0.5">Current Route</p>
-              <p className="text-sm font-semibold text-gray-900">
+              <p className="text-xs text-muted-foreground mb-0.5">Current Route</p>
+              <p className="text-sm font-semibold text-foreground">
                 {bus.currentRouteId
                   ? `${bus.currentRouteId.routeNumber} — ${bus.currentRouteId.name}`
                   : 'None'}
@@ -214,7 +214,7 @@ export default function DriverBusPage() {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
-            <MapPin size={16} className="text-blue-600" />
+            <MapPin size={16} className="text-primary" />
             Current Location
           </CardTitle>
           {bus.currentLocation && (
@@ -229,20 +229,20 @@ export default function DriverBusPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           {bus.currentLocation && (
-            <div className="flex items-center gap-4 p-3 rounded-lg bg-blue-50 border border-blue-100">
-              <Navigation className="text-blue-600 flex-shrink-0" size={18} />
+            <div className="flex items-center gap-4 p-3 rounded-lg bg-primary/10 border border-primary">
+              <Navigation className="text-primary flex-shrink-0" size={18} />
               <div>
-                <p className="text-sm font-medium text-blue-800">
+                <p className="text-sm font-medium text-primary">
                   {bus.currentLocation.lat.toFixed(6)}, {bus.currentLocation.lng.toFixed(6)}
                 </p>
-                <p className="text-xs text-blue-600">Current coordinates</p>
+                <p className="text-xs text-primary">Current coordinates</p>
               </div>
             </div>
           )}
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <Label htmlFor="lat" className="text-xs text-gray-600">
+              <Label htmlFor="lat" className="text-xs text-muted-foreground">
                 Latitude
               </Label>
               <Input
@@ -254,7 +254,7 @@ export default function DriverBusPage() {
               />
             </div>
             <div>
-              <Label htmlFor="lng" className="text-xs text-gray-600">
+              <Label htmlFor="lng" className="text-xs text-muted-foreground">
                 Longitude
               </Label>
               <Input

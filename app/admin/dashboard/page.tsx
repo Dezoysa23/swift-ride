@@ -17,6 +17,10 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Bus as BusIcon, Users, Map, CalendarCheck } from 'lucide-react'
+import { Eyebrow } from '@/components/ui/eyebrow'
+import { StatCounter } from '@/components/ui/stat-counter'
+import { TiltCard } from '@/components/ui/tilt-card'
+import { cn } from '@/lib/utils'
 
 function StatusBadge({ status }: { status: string }) {
   const variants: Record<string, 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning'> = {
@@ -99,17 +103,18 @@ export default async function AdminDashboardPage() {
   ])
 
   const stats = [
-    { title: 'Total Buses', value: totalBuses, sub: `${activeBuses} active`, icon: BusIcon, color: 'text-blue-600' },
-    { title: 'Active Drivers', value: activeDrivers, sub: `${totalDrivers} total`, icon: Users, color: 'text-green-600' },
-    { title: 'Active Routes', value: activeRoutes, sub: `${totalRoutes} total`, icon: Map, color: 'text-purple-600' },
-    { title: "Today's Bookings", value: todayBookingsCount, sub: 'bookings today', icon: CalendarCheck, color: 'text-orange-600' },
+    { title: 'Total Buses', value: totalBuses, sub: `${activeBuses} active`, icon: BusIcon, tone: 'text-coral', toneBg: 'bg-coral/15' },
+    { title: 'Active Drivers', value: activeDrivers, sub: `${totalDrivers} total`, icon: Users, tone: 'text-teal', toneBg: 'bg-teal/15' },
+    { title: 'Active Routes', value: activeRoutes, sub: `${totalRoutes} total`, icon: Map, tone: 'text-gold', toneBg: 'bg-gold/20' },
+    { title: "Today's Bookings", value: todayBookingsCount, sub: 'bookings today', icon: CalendarCheck, tone: 'text-coral', toneBg: 'bg-coral/15' },
   ]
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 text-sm mt-1">Welcome back, {user.name}</p>
+        <Eyebrow tone="teal">Admin · Overview</Eyebrow>
+        <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Welcome back, {user.name}</p>
       </div>
 
       {/* Stat cards */}
@@ -117,20 +122,24 @@ export default async function AdminDashboardPage() {
         {stats.map((stat) => {
           const Icon = stat.icon
           return (
-            <Card key={stat.title}>
+            <TiltCard key={stat.title}>
+              <Card interactive className="h-full">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-500">{stat.title}</p>
-                    <p className="text-3xl font-bold text-gray-900 mt-1">{stat.value}</p>
-                    <p className="text-xs text-gray-400 mt-1">{stat.sub}</p>
+                    <p className="text-sm text-muted-foreground">{stat.title}</p>
+                    <p className="mt-1 font-display text-3xl font-bold text-foreground">
+                      <StatCounter value={stat.value} />
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">{stat.sub}</p>
                   </div>
-                  <div className={`${stat.color} bg-gray-100 p-3 rounded-full`}>
+                  <div className={cn('grid h-12 w-12 place-items-center rounded-xl', stat.toneBg, stat.tone)}>
                     <Icon size={22} />
                   </div>
                 </div>
               </CardContent>
-            </Card>
+              </Card>
+            </TiltCard>
           )
         })}
       </div>
@@ -155,7 +164,7 @@ export default async function AdminDashboardPage() {
               <TableBody>
                 {recentBookings.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center text-gray-400 py-6">
+                    <TableCell colSpan={5} className="text-center text-muted-foreground py-6">
                       No bookings yet
                     </TableCell>
                   </TableRow>
@@ -200,7 +209,7 @@ export default async function AdminDashboardPage() {
               <TableBody>
                 {recentTurns.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center text-gray-400 py-6">
+                    <TableCell colSpan={5} className="text-center text-muted-foreground py-6">
                       No turns yet
                     </TableCell>
                   </TableRow>

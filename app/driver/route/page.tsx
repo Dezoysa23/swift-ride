@@ -73,8 +73,8 @@ export default function DriverRoutePage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <MapPin className="mx-auto text-gray-300 mb-3" size={40} />
-          <p className="text-gray-500 text-sm">{error || 'No route assigned to your bus'}</p>
+          <MapPin className="mx-auto text-muted-foreground mb-3" size={40} />
+          <p className="text-muted-foreground text-sm">{error || 'No route assigned to your bus'}</p>
         </div>
       </div>
     )
@@ -86,8 +86,8 @@ export default function DriverRoutePage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">My Route</h1>
-        <p className="text-gray-500 text-sm mt-1">Current assigned route details</p>
+        <h1 className="text-2xl font-bold text-foreground">My Route</h1>
+        <p className="text-muted-foreground text-sm mt-1">Current assigned route details</p>
       </div>
 
       {/* Route overview */}
@@ -109,38 +109,38 @@ export default function DriverRoutePage() {
         <CardContent>
           {/* Start → End */}
           <div className="flex items-center gap-2 mb-5 flex-wrap">
-            <div className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
-              <MapPin size={14} className="text-green-500" />
+            <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
+              <MapPin size={14} className="text-teal" />
               {route.startPoint}
             </div>
-            <ArrowRight size={14} className="text-gray-400" />
-            <div className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
-              <MapPin size={14} className="text-red-500" />
+            <ArrowRight size={14} className="text-muted-foreground" />
+            <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
+              <MapPin size={14} className="text-destructive" />
               {route.endPoint}
             </div>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-blue-50">
-              <Ruler className="text-blue-600 flex-shrink-0" size={18} />
+            <div className="flex items-center gap-3 p-3 rounded-lg bg-primary/10">
+              <Ruler className="text-primary flex-shrink-0" size={18} />
               <div>
-                <p className="text-xs text-blue-600 font-medium">Distance</p>
-                <p className="text-sm font-bold text-blue-800">{route.distanceKm} km</p>
+                <p className="text-xs text-primary font-medium">Distance</p>
+                <p className="text-sm font-bold text-primary">{route.distanceKm} km</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-purple-50">
-              <Clock className="text-purple-600 flex-shrink-0" size={18} />
+            <div className="flex items-center gap-3 p-3 rounded-lg bg-teal/15">
+              <Clock className="text-teal flex-shrink-0" size={18} />
               <div>
-                <p className="text-xs text-purple-600 font-medium">Duration</p>
-                <p className="text-sm font-bold text-purple-800">{route.estimatedMinutes} min</p>
+                <p className="text-xs text-teal font-medium">Duration</p>
+                <p className="text-sm font-bold text-teal">{route.estimatedMinutes} min</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-green-50">
-              <DollarSign className="text-green-600 flex-shrink-0" size={18} />
+            <div className="flex items-center gap-3 p-3 rounded-lg bg-teal/15">
+              <DollarSign className="text-teal flex-shrink-0" size={18} />
               <div>
-                <p className="text-xs text-green-600 font-medium">Fare</p>
-                <p className="text-sm font-bold text-green-800">${route.fare.toFixed(2)}</p>
+                <p className="text-xs text-teal font-medium">Fare</p>
+                <p className="text-sm font-bold text-teal">${route.fare.toFixed(2)}</p>
               </div>
             </div>
           </div>
@@ -151,13 +151,13 @@ export default function DriverRoutePage() {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
-            <MapPin size={16} className="text-blue-600" />
+            <MapPin size={16} className="text-primary" />
             Route Stops ({sortedStops.length})
           </CardTitle>
         </CardHeader>
         <CardContent>
           {sortedStops.length === 0 ? (
-            <p className="text-gray-500 text-sm">No stops defined</p>
+            <p className="text-muted-foreground text-sm">No stops defined</p>
           ) : (
             <div className="relative">
               {sortedStops.map((stop, idx) => (
@@ -167,33 +167,33 @@ export default function DriverRoutePage() {
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
                         idx === 0
-                          ? 'bg-green-500 text-white'
+                          ? 'bg-teal text-white'
                           : idx === sortedStops.length - 1
-                          ? 'bg-red-500 text-white'
-                          : 'bg-blue-100 text-blue-700'
+                          ? 'bg-destructive text-white'
+                          : 'bg-primary/10 text-primary'
                       }`}
                     >
                       {stop.order}
                     </div>
                     {idx < sortedStops.length - 1 && (
-                      <div className="w-0.5 h-6 bg-gray-200 mt-1" />
+                      <div className="w-0.5 h-6 bg-border mt-1" />
                     )}
                   </div>
                   {/* Stop info */}
                   <div className="flex-1 pt-1">
-                    <p className="text-sm font-medium text-gray-900">{stop.name}</p>
+                    <p className="text-sm font-medium text-foreground">{stop.name}</p>
                     {(stop.lat || stop.lng) && (
-                      <p className="text-xs text-gray-400 mt-0.5">
+                      <p className="text-xs text-muted-foreground mt-0.5">
                         {stop.lat?.toFixed(4)}, {stop.lng?.toFixed(4)}
                       </p>
                     )}
                     {idx === 0 && (
-                      <Badge variant="outline" className="text-xs mt-1 text-green-700 border-green-300">
+                      <Badge variant="outline" className="text-xs mt-1 text-teal border-teal/40">
                         Start
                       </Badge>
                     )}
                     {idx === sortedStops.length - 1 && (
-                      <Badge variant="outline" className="text-xs mt-1 text-red-700 border-red-300">
+                      <Badge variant="outline" className="text-xs mt-1 text-destructive border-destructive/40">
                         End
                       </Badge>
                     )}
@@ -210,7 +210,7 @@ export default function DriverRoutePage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <Bus size={16} className="text-blue-600" />
+              <Bus size={16} className="text-primary" />
               Buses on This Route ({route.assignedBuses.length})
             </CardTitle>
           </CardHeader>
@@ -219,14 +219,14 @@ export default function DriverRoutePage() {
               {route.assignedBuses.map((bus) => (
                 <div
                   key={bus._id}
-                  className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 bg-gray-50"
+                  className="flex items-center gap-3 p-3 rounded-lg border border-border bg-muted"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <Bus size={16} className="text-blue-600" />
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Bus size={16} className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">{bus.busNumber}</p>
-                    <p className="text-xs text-gray-500">{bus.plateNumber}</p>
+                    <p className="text-sm font-semibold text-foreground">{bus.busNumber}</p>
+                    <p className="text-xs text-muted-foreground">{bus.plateNumber}</p>
                   </div>
                   <Badge
                     variant={

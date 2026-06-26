@@ -107,8 +107,8 @@ export default function DriverPassengersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Passengers</h1>
-          <p className="text-gray-500 text-sm mt-1">Current turn passenger list</p>
+          <h1 className="text-2xl font-bold text-foreground">Passengers</h1>
+          <p className="text-muted-foreground text-sm mt-1">Current turn passenger list</p>
         </div>
         <Button variant="outline" size="sm" onClick={loadPassengers}>
           <RefreshCw size={14} className="mr-1.5" />
@@ -121,17 +121,17 @@ export default function DriverPassengersPage() {
           <CardContent className="flex flex-col items-center justify-center py-16">
             {noActiveTurn ? (
               <>
-                <Navigation className="text-gray-300 mb-3" size={44} />
-                <p className="text-gray-600 font-semibold text-base">No active turn</p>
-                <p className="text-gray-400 text-sm mt-1">
+                <Navigation className="text-muted-foreground mb-3" size={44} />
+                <p className="text-muted-foreground font-semibold text-base">No active turn</p>
+                <p className="text-muted-foreground text-sm mt-1">
                   Start your duty from the Profile → Duty tab to see passengers
                 </p>
               </>
             ) : (
               <>
-                <Users className="text-gray-300 mb-3" size={44} />
-                <p className="text-gray-600 font-semibold text-base">No passengers yet</p>
-                <p className="text-gray-400 text-sm mt-1">
+                <Users className="text-muted-foreground mb-3" size={44} />
+                <p className="text-muted-foreground font-semibold text-base">No passengers yet</p>
+                <p className="text-muted-foreground text-sm mt-1">
                   No bookings found for the current turn
                 </p>
               </>
@@ -142,7 +142,7 @@ export default function DriverPassengersPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <Users size={16} className="text-blue-600" />
+              <Users size={16} className="text-primary" />
               Passenger List
             </CardTitle>
             <CardDescription>
@@ -170,21 +170,21 @@ export default function DriverPassengersPage() {
                     <TableRow key={p._id}>
                       <TableCell>
                         <div>
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-sm font-medium text-foreground">
                             {p.passengerId?.name || 'Unknown'}
                           </p>
-                          <p className="text-xs text-gray-400">{p.passengerId?.email}</p>
+                          <p className="text-xs text-muted-foreground">{p.passengerId?.email}</p>
                         </div>
                       </TableCell>
-                      <TableCell className="text-sm text-gray-600">
+                      <TableCell className="text-sm text-muted-foreground">
                         {p.passengerId?.phone || '—'}
                       </TableCell>
-                      <TableCell className="text-sm text-gray-700">{p.boardingStop}</TableCell>
-                      <TableCell className="text-sm text-gray-700">{p.alightingStop}</TableCell>
-                      <TableCell className="text-sm font-medium text-gray-900">
+                      <TableCell className="text-sm text-muted-foreground">{p.boardingStop}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">{p.alightingStop}</TableCell>
+                      <TableCell className="text-sm font-medium text-foreground">
                         ${p.fare.toFixed(2)}
                       </TableCell>
-                      <TableCell className="text-sm text-gray-700">{p.seats}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">{p.seats}</TableCell>
                       <TableCell>
                         <Badge variant={statusVariant[p.status]} className="capitalize text-xs">
                           {p.status}
@@ -203,7 +203,7 @@ export default function DriverPassengersPage() {
                             {boardingId === p._id ? 'Marking…' : 'Mark Boarded'}
                           </Button>
                         ) : (
-                          <span className="text-xs text-gray-400">—</span>
+                          <span className="text-xs text-muted-foreground">—</span>
                         )}
                       </TableCell>
                     </TableRow>

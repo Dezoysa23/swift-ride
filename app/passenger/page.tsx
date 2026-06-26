@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
+import { TiltCard } from '@/components/ui/tilt-card'
 
 interface RouteResult {
   _id: string
@@ -124,14 +125,14 @@ export default function PassengerHomePage() {
   return (
     <div className="space-y-8">
       {/* Hero / Search */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 md:p-8">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-6 md:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
             <Search size={20} className="text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Find a Route</h1>
-            <p className="text-sm text-gray-500">Search available bus routes and book your seat</p>
+            <h1 className="text-xl font-bold text-foreground">Find a Route</h1>
+            <p className="text-sm text-muted-foreground">Search available bus routes and book your seat</p>
           </div>
         </div>
 
@@ -140,7 +141,7 @@ export default function PassengerHomePage() {
             <div className="space-y-1.5">
               <Label htmlFor="from">From</Label>
               <div className="relative">
-                <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="from"
                   placeholder="Departure stop or city"
@@ -153,7 +154,7 @@ export default function PassengerHomePage() {
             <div className="space-y-1.5">
               <Label htmlFor="to">To</Label>
               <div className="relative">
-                <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="to"
                   placeholder="Destination stop or city"
@@ -166,7 +167,7 @@ export default function PassengerHomePage() {
             <div className="space-y-1.5">
               <Label htmlFor="date">Date</Label>
               <div className="relative">
-                <Calendar size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Calendar size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="date"
                   type="date"
@@ -199,19 +200,20 @@ export default function PassengerHomePage() {
       {/* Search results */}
       {searched && (
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-lg font-semibold text-foreground mb-4">
             {routes.length} Route{routes.length !== 1 ? 's' : ''} Found
           </h2>
           {routes.length === 0 ? (
-            <div className="bg-white rounded-xl border border-gray-200 p-10 text-center">
-              <Bus size={40} className="mx-auto text-gray-300 mb-3" />
-              <p className="text-gray-500 font-medium">No routes match your search</p>
-              <p className="text-sm text-gray-400 mt-1">Try different locations or check back later</p>
+            <div className="bg-card rounded-xl border border-border p-10 text-center">
+              <Bus size={40} className="mx-auto text-muted-foreground mb-3" />
+              <p className="text-muted-foreground font-medium">No routes match your search</p>
+              <p className="text-sm text-muted-foreground mt-1">Try different locations or check back later</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {routes.map((route) => (
-                <Card key={route._id} className="hover:shadow-md transition-shadow">
+                <TiltCard key={route._id} max={6}>
+                  <Card interactive className="h-full">
                   <CardContent className="p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div>
@@ -221,18 +223,18 @@ export default function PassengerHomePage() {
                           </Badge>
                           <Badge variant="success" className="text-xs">Active</Badge>
                         </div>
-                        <h3 className="font-semibold text-gray-900">{route.name}</h3>
-                        <p className="text-sm text-gray-500 mt-0.5">
+                        <h3 className="font-semibold text-foreground">{route.name}</h3>
+                        <p className="text-sm text-muted-foreground mt-0.5">
                           {route.startPoint} → {route.endPoint}
                         </p>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="text-xl font-bold text-blue-600">${route.fare.toFixed(2)}</p>
-                        <p className="text-xs text-gray-400">per seat</p>
+                        <p className="text-xl font-bold text-primary">${route.fare.toFixed(2)}</p>
+                        <p className="text-xs text-muted-foreground">per seat</p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <span className="flex items-center gap-1">
                         <Clock size={13} />
                         {formatMinutes(route.estimatedMinutes)}
@@ -258,7 +260,8 @@ export default function PassengerHomePage() {
                       <ArrowRight size={14} />
                     </Button>
                   </CardContent>
-                </Card>
+                  </Card>
+                </TiltCard>
               ))}
             </div>
           )}
@@ -268,7 +271,7 @@ export default function PassengerHomePage() {
       {/* Recent Bookings */}
       <section>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">My Recent Bookings</h2>
+          <h2 className="text-lg font-semibold text-foreground">My Recent Bookings</h2>
           {recentBookings.length > 0 && (
             <Button variant="outline" size="sm" onClick={() => router.push('/passenger/bookings')}>
               View All
@@ -283,31 +286,31 @@ export default function PassengerHomePage() {
             ))}
           </div>
         ) : recentBookings.length === 0 ? (
-          <div className="bg-white rounded-xl border border-gray-200 p-10 text-center">
-            <Calendar size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No bookings yet</p>
-            <p className="text-sm text-gray-400 mt-1">Search for a route above and book your first trip!</p>
+          <div className="bg-card rounded-xl border border-border p-10 text-center">
+            <Calendar size={40} className="mx-auto text-muted-foreground mb-3" />
+            <p className="text-muted-foreground font-medium">No bookings yet</p>
+            <p className="text-sm text-muted-foreground mt-1">Search for a route above and book your first trip!</p>
           </div>
         ) : (
           <div className="space-y-3">
             {recentBookings.map((booking) => (
               <div
                 key={booking._id}
-                className="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-4"
+                className="bg-card rounded-xl border border-border p-4 flex items-center gap-4"
               >
-                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
-                  <Bus size={18} className="text-blue-600" />
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Bus size={18} className="text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 truncate">
+                  <p className="font-medium text-foreground truncate">
                     {booking.routeId?.name ?? 'Unknown Route'}
                     {booking.routeId?.routeNumber && (
-                      <span className="text-gray-400 text-sm font-normal ml-2">
+                      <span className="text-muted-foreground text-sm font-normal ml-2">
                         #{booking.routeId.routeNumber}
                       </span>
                     )}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground">
                     {formatDate(booking.bookingDate)} · {booking.boardingStop} → {booking.alightingStop}
                   </p>
                 </div>
@@ -315,7 +318,7 @@ export default function PassengerHomePage() {
                   <Badge variant={statusVariant[booking.status] ?? 'default'} className="capitalize">
                     {booking.status}
                   </Badge>
-                  <p className="text-sm font-semibold text-gray-700">${booking.fare.toFixed(2)}</p>
+                  <p className="text-sm font-semibold text-muted-foreground">${booking.fare.toFixed(2)}</p>
                 </div>
               </div>
             ))}

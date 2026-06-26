@@ -197,10 +197,10 @@ export function DriverManagement() {
                     <div
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         driver.status === "on_duty"
-                          ? "bg-green-100 text-green-800"
+                          ? "bg-teal/15 text-teal"
                           : driver.status === "off_duty"
-                            ? "bg-red-100 text-red-800"
-                            : "bg-blue-100 text-blue-800"
+                            ? "bg-destructive/10 text-destructive"
+                            : "bg-primary/10 text-primary"
                       }`}
                     >
                       {driver.status === "on_duty"

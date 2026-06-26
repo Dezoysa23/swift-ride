@@ -195,8 +195,8 @@ export default function BusesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Buses</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage your fleet</p>
+          <h1 className="text-2xl font-bold text-foreground">Buses</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage your fleet</p>
         </div>
         <Button onClick={openAdd}>
           <Plus size={16} className="mr-2" /> Add Bus
@@ -224,11 +224,11 @@ export default function BusesPage() {
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-8 text-gray-400">Loading…</TableCell>
+                  <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">Loading…</TableCell>
                 </TableRow>
               ) : buses.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-8 text-gray-400">No buses found</TableCell>
+                  <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">No buses found</TableCell>
                 </TableRow>
               ) : (
                 buses.map((bus) => (
@@ -243,7 +243,7 @@ export default function BusesPage() {
                         {bus.status.charAt(0).toUpperCase() + bus.status.slice(1)}
                       </Badge>
                     </TableCell>
-                    <TableCell>{bus.driverId?.name ?? <span className="text-gray-400">Unassigned</span>}</TableCell>
+                    <TableCell>{bus.driverId?.name ?? <span className="text-muted-foreground">Unassigned</span>}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Button size="sm" variant="outline" onClick={() => openEdit(bus)}>
@@ -251,7 +251,7 @@ export default function BusesPage() {
                         </Button>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
+                            <Button size="sm" variant="outline" className="text-destructive hover:text-destructive">
                               <Trash2 size={14} />
                             </Button>
                           </AlertDialogTrigger>
@@ -264,7 +264,7 @@ export default function BusesPage() {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={() => handleDelete(bus._id)} className="bg-red-600 hover:bg-red-700">
+                              <AlertDialogAction onClick={() => handleDelete(bus._id)} className="bg-destructive hover:bg-destructive/90">
                                 Delete
                               </AlertDialogAction>
                             </AlertDialogFooter>

@@ -198,11 +198,11 @@ async function seedDatabase() {
     // Update driver status and assigned route
     await db
       .collection("users")
-      .updateOne({ _id: driverResult.insertedIds[0] }, { $set: { status: "on_duty", assignedRouteId: routes[0]._id } })
+      .updateOne({ _id: driverResult.insertedIds[0] }, { $set: { status: "on_duty", assignedRouteId: (routes[0] as { _id?: unknown })._id } })
 
     await db
       .collection("users")
-      .updateOne({ _id: driverResult.insertedIds[1] }, { $set: { status: "on_duty", assignedRouteId: routes[1]._id } })
+      .updateOne({ _id: driverResult.insertedIds[1] }, { $set: { status: "on_duty", assignedRouteId: (routes[1] as { _id?: unknown })._id } })
 
     const routeResult = await db.collection("routes").insertMany(routes)
     const routeIds = Object.values(routeResult.insertedIds).map((id) => id.toString())

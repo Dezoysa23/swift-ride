@@ -199,32 +199,32 @@ function BookPageInner() {
       <div className="max-w-md mx-auto">
         <Card>
           <CardContent className="p-10 text-center">
-            <CheckCircle2 size={56} className="mx-auto text-green-500 mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Booking Confirmed!</h2>
-            <p className="text-gray-500 mb-6">
+            <CheckCircle2 size={56} className="mx-auto text-teal mb-4" />
+            <h2 className="text-2xl font-bold text-foreground mb-2">Booking Confirmed!</h2>
+            <p className="text-muted-foreground mb-6">
               Your seat on <strong>{route.name}</strong> has been booked and payment confirmed.
             </p>
-            <div className="bg-gray-50 rounded-xl p-4 text-left space-y-2 mb-6 text-sm">
+            <div className="bg-muted rounded-xl p-4 text-left space-y-2 mb-6 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-500">Route</span>
+                <span className="text-muted-foreground">Route</span>
                 <span className="font-medium">{route.routeNumber} – {route.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Date</span>
+                <span className="text-muted-foreground">Date</span>
                 <span className="font-medium">{new Date(bookingDate).toLocaleDateString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Stops</span>
+                <span className="text-muted-foreground">Stops</span>
                 <span className="font-medium">{boardingStop} → {alightingStop}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Seats</span>
+                <span className="text-muted-foreground">Seats</span>
                 <span className="font-medium">{seats}</span>
               </div>
               <Separator />
               <div className="flex justify-between font-semibold">
                 <span>Total Paid</span>
-                <span className="text-blue-600">Rs. {totalFare.toFixed(2)}</span>
+                <span className="text-primary">Rs. {totalFare.toFixed(2)}</span>
               </div>
             </div>
             <Button onClick={() => router.push('/passenger/bookings')} className="w-full gap-2">
@@ -240,8 +240,8 @@ function BookPageInner() {
   return (
     <div className="max-w-xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Book Your Trip</h1>
-        <p className="text-sm text-gray-500 mt-1">Fill in your journey details below</p>
+        <h1 className="text-2xl font-bold text-foreground">Book Your Trip</h1>
+        <p className="text-sm text-muted-foreground mt-1">Fill in your journey details below</p>
       </div>
 
       {/* Route Info Card */}
@@ -249,23 +249,23 @@ function BookPageInner() {
         <CardContent className="p-5">
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
-                <Bus size={18} className="text-blue-600" />
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Bus size={18} className="text-primary" />
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
                   <Badge variant="outline" className="text-xs font-mono">#{route.routeNumber}</Badge>
                 </div>
-                <h2 className="font-semibold text-gray-900">{route.name}</h2>
-                <p className="text-sm text-gray-500">{route.startPoint} → {route.endPoint}</p>
+                <h2 className="font-semibold text-foreground">{route.name}</h2>
+                <p className="text-sm text-muted-foreground">{route.startPoint} → {route.endPoint}</p>
               </div>
             </div>
             <div className="text-right flex-shrink-0">
-              <p className="text-2xl font-bold text-blue-600">Rs. {route.fare.toFixed(2)}</p>
-              <p className="text-xs text-gray-400">per seat</p>
+              <p className="text-2xl font-bold text-primary">Rs. {route.fare.toFixed(2)}</p>
+              <p className="text-xs text-muted-foreground">per seat</p>
             </div>
           </div>
-          <div className="flex gap-4 mt-3 text-sm text-gray-500">
+          <div className="flex gap-4 mt-3 text-sm text-muted-foreground">
             <span className="flex items-center gap-1"><Clock size={13} />{formatMinutes(route.estimatedMinutes)}</span>
             <span className="flex items-center gap-1"><MapPin size={13} />{route.distanceKm} km</span>
           </div>
@@ -284,7 +284,7 @@ function BookPageInner() {
               <div className="space-y-1.5">
                 <Label htmlFor="bookingDate">Travel Date</Label>
                 <div className="relative">
-                  <Calendar size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Calendar size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="bookingDate"
                     type="date"
@@ -335,7 +335,7 @@ function BookPageInner() {
               <div className="space-y-1.5">
                 <Label htmlFor="seats">Number of Seats</Label>
                 <div className="relative">
-                  <Users size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Users size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="seats"
                     type="number"
@@ -346,26 +346,26 @@ function BookPageInner() {
                     className="pl-9"
                   />
                 </div>
-                <p className="text-xs text-gray-400">Maximum 4 seats per booking</p>
+                <p className="text-xs text-muted-foreground">Maximum 4 seats per booking</p>
               </div>
 
               {/* Fare Summary */}
-              <div className="bg-blue-50 rounded-xl p-4 space-y-2">
-                <h3 className="font-medium text-gray-900 text-sm">Fare Summary</h3>
-                <div className="flex justify-between text-sm text-gray-600">
+              <div className="bg-primary/10 rounded-xl p-4 space-y-2">
+                <h3 className="font-medium text-foreground text-sm">Fare Summary</h3>
+                <div className="flex justify-between text-sm text-muted-foreground">
                   <span>Rs. {route.fare.toFixed(2)} × {seats} seat{seats !== 1 ? 's' : ''}</span>
                   <span>Rs. {fare.toFixed(2)}</span>
                 </div>
                 {locationDetails && (
-                  <div className="flex justify-between text-sm text-gray-600">
+                  <div className="flex justify-between text-sm text-muted-foreground">
                     <span>Route estimate</span>
                     <span>Rs. {locationDetails.estimatedPrice.toFixed(2)}</span>
                   </div>
                 )}
                 <Separator />
-                <div className="flex justify-between font-bold text-gray-900">
+                <div className="flex justify-between font-bold text-foreground">
                   <span>Total</span>
-                  <span className="text-blue-600 text-lg">Rs. {fare.toFixed(2)}</span>
+                  <span className="text-primary text-lg">Rs. {fare.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -388,37 +388,37 @@ function BookPageInner() {
             <CardDescription>Review your booking and confirm payment</CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
-            <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
+            <div className="bg-muted rounded-xl p-4 space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-500">Date</span>
+                <span className="text-muted-foreground">Date</span>
                 <span className="font-medium">{new Date(bookingDate).toLocaleDateString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Boarding</span>
+                <span className="text-muted-foreground">Boarding</span>
                 <span className="font-medium">{boardingStop}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Alighting</span>
+                <span className="text-muted-foreground">Alighting</span>
                 <span className="font-medium">{alightingStop}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Seats</span>
+                <span className="text-muted-foreground">Seats</span>
                 <span className="font-medium">{seats}</span>
               </div>
               <Separator />
               <div className="flex justify-between font-bold">
                 <span>Amount Due</span>
-                <span className="text-blue-600 text-base">Rs. {(totalFare || fare).toFixed(2)}</span>
+                <span className="text-primary text-base">Rs. {(totalFare || fare).toFixed(2)}</span>
               </div>
             </div>
 
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-700">
+            <div className="bg-gold/20 border border-gold/40 rounded-lg p-3 text-xs text-gold">
               <strong>Demo Mode:</strong> Real Stripe.js card input will be integrated here. Click
               "Confirm Payment" to simulate a successful payment.
             </div>
 
             {clientSecret && (
-              <p className="text-xs text-gray-400 font-mono break-all">
+              <p className="text-xs text-muted-foreground font-mono break-all">
                 Payment Intent: {clientSecret.split('_secret')[0]}…
               </p>
             )}

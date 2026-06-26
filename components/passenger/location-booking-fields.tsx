@@ -330,19 +330,19 @@ export function LocationBookingFields({ onChange }: LocationBookingFieldsProps) 
     if (items.length === 0) return null
 
     return (
-      <div className="mt-2 overflow-hidden rounded-md border bg-white shadow-sm">
+      <div className="mt-2 overflow-hidden rounded-md border bg-card shadow-sm">
         {items.slice(0, 5).map((suggestion) => (
           <button
             key={`${target}-${suggestion.placeId ?? suggestion.description}`}
             type="button"
-            className="flex w-full items-start gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50"
+            className="flex w-full items-start gap-2 px-3 py-2 text-left text-sm hover:bg-muted"
             onClick={() => geocodeSuggestion(suggestion, target)}
           >
-            <MapPin className="mt-0.5 h-4 w-4 text-gray-400" />
+            <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
             <span>
-              <span className="block font-medium text-gray-900">{suggestion.mainText}</span>
+              <span className="block font-medium text-foreground">{suggestion.mainText}</span>
               {suggestion.secondaryText && (
-                <span className="block text-xs text-gray-500">{suggestion.secondaryText}</span>
+                <span className="block text-xs text-muted-foreground">{suggestion.secondaryText}</span>
               )}
             </span>
           </button>
@@ -352,11 +352,11 @@ export function LocationBookingFields({ onChange }: LocationBookingFieldsProps) 
   }
 
   return (
-    <div className="space-y-4 rounded-xl border bg-white p-4">
+    <div className="space-y-4 rounded-xl border bg-card p-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="text-sm font-semibold text-gray-900">Pickup and drop-off</h3>
-          <p className="text-xs text-gray-500">Optional for route bookings, required for direct pickup support.</p>
+          <h3 className="text-sm font-semibold text-foreground">Pickup and drop-off</h3>
+          <p className="text-xs text-muted-foreground">Optional for route bookings, required for direct pickup support.</p>
         </div>
         <div className="flex gap-1">
           {(["standard", "comfort", "premium", "van"] as RideType[]).map((type) => (
@@ -393,7 +393,7 @@ export function LocationBookingFields({ onChange }: LocationBookingFieldsProps) 
             placeholder="Search pickup"
           />
           {suggestionList(pickupSuggestions, "pickup")}
-          {locationMessage && <p className="mt-2 text-xs text-amber-700">{locationMessage}</p>}
+          {locationMessage && <p className="mt-2 text-xs text-gold">{locationMessage}</p>}
         </div>
 
         <div>
@@ -431,7 +431,7 @@ export function LocationBookingFields({ onChange }: LocationBookingFieldsProps) 
             <Badge variant="success">Estimate Rs. {estimate.estimatedPrice.toFixed(2)}</Badge>
           </>
         ) : (
-          <span className="text-xs text-gray-500">Select both locations to preview the route.</span>
+          <span className="text-xs text-muted-foreground">Select both locations to preview the route.</span>
         )}
       </div>
     </div>

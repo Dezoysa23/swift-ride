@@ -79,14 +79,14 @@ const PaymentForm = ({ clientSecret, onSuccess, onCancel }: { clientSecret: stri
   }
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg space-y-6">
+    <div className="max-w-md mx-auto p-6 bg-card rounded-xl shadow-lg space-y-6">
       <div className="text-center space-y-2">
-        <h3 className="text-2xl font-bold text-gray-900">Complete Your Payment</h3>
-        <p className="text-gray-500">Your booking will be confirmed after payment</p>
+        <h3 className="text-2xl font-bold text-foreground">Complete Your Payment</h3>
+        <p className="text-muted-foreground">Your booking will be confirmed after payment</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-muted p-4 rounded-lg">
           <PaymentElement options={{
             layout: {
               type: 'tabs',
@@ -122,7 +122,7 @@ const PaymentForm = ({ clientSecret, onSuccess, onCancel }: { clientSecret: stri
           <Button
             type="submit"
             disabled={isProcessing}
-            className="w-full sm:w-auto order-1 sm:order-2 bg-green-600 hover:bg-green-700"
+            className="w-full sm:w-auto order-1 sm:order-2 bg-teal hover:bg-teal/90"
           >
             <span className="flex items-center justify-center gap-2">
               {isProcessing ? (
@@ -148,7 +148,7 @@ const PaymentForm = ({ clientSecret, onSuccess, onCancel }: { clientSecret: stri
         </div>
       </form>
 
-      <div className="text-center text-sm text-gray-500 mt-4">
+      <div className="text-center text-sm text-muted-foreground mt-4">
         <p className="flex items-center justify-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>

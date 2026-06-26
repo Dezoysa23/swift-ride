@@ -197,8 +197,8 @@ export default function RoutesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Routes</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage bus routes</p>
+          <h1 className="text-2xl font-bold text-foreground">Routes</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage bus routes</p>
         </div>
         <Button onClick={openAdd}><Plus size={16} className="mr-2" /> Add Route</Button>
       </div>
@@ -220,9 +220,9 @@ export default function RoutesPage() {
             </TableHeader>
             <TableBody>
               {loading ? (
-                <TableRow><TableCell colSpan={7} className="text-center py-8 text-gray-400">Loading…</TableCell></TableRow>
+                <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">Loading…</TableCell></TableRow>
               ) : routes.length === 0 ? (
-                <TableRow><TableCell colSpan={7} className="text-center py-8 text-gray-400">No routes found</TableCell></TableRow>
+                <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">No routes found</TableCell></TableRow>
               ) : (
                 routes.map((r) => (
                   <React.Fragment key={r._id}>
@@ -234,7 +234,7 @@ export default function RoutesPage() {
                       <TableCell>
                         <button
                           onClick={() => setExpandedId(expandedId === r._id ? null : r._id)}
-                          className="flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                          className="flex items-center gap-1 text-sm text-primary hover:underline"
                         >
                           {(r.stops ?? []).length} stops
                           {expandedId === r._id ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
@@ -250,7 +250,7 @@ export default function RoutesPage() {
                           <Button size="sm" variant="outline" onClick={() => openEdit(r)}><Pencil size={14} /></Button>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
+                              <Button size="sm" variant="outline" className="text-destructive hover:text-destructive">
                                 <Trash2 size={14} />
                               </Button>
                             </AlertDialogTrigger>
@@ -263,7 +263,7 @@ export default function RoutesPage() {
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => handleDelete(r._id)} className="bg-red-600 hover:bg-red-700">Delete</AlertDialogAction>
+                                <AlertDialogAction onClick={() => handleDelete(r._id)} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -271,16 +271,16 @@ export default function RoutesPage() {
                       </TableCell>
                     </TableRow>
                     {expandedId === r._id && (
-                      <TableRow className="bg-gray-50">
+                      <TableRow className="bg-muted">
                         <TableCell colSpan={7} className="py-3 px-6">
                           <div className="flex flex-wrap gap-2">
                             {(r.stops ?? [])
                               .sort((a, b) => a.order - b.order)
                               .map((s, i, arr) => (
-                                <div key={i} className="flex items-center gap-1 text-xs text-gray-600">
-                                  <MapPin size={11} className="text-blue-500" />
+                                <div key={i} className="flex items-center gap-1 text-xs text-muted-foreground">
+                                  <MapPin size={11} className="text-primary" />
                                   <span>{s.name}</span>
-                                  {i < arr.length - 1 && <span className="text-gray-300 ml-1">›</span>}
+                                  {i < arr.length - 1 && <span className="text-muted-foreground ml-1">›</span>}
                                 </div>
                               ))}
                           </div>
