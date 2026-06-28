@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAuthUser } from '@/lib/auth'
+import { checkRateLimit } from '@/lib/rateLimit'
 import { connectDB } from '@/lib/db'
 import Booking from '@/lib/models/Booking'
 import DriverLocation from '@/lib/models/DriverLocation'
@@ -8,6 +9,15 @@ export async function GET(request: NextRequest) {
   const auth = await getAuthUser(request)
   if (!auth || auth.role !== 'admin') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // This is a frequent polling endpoint — cap to protect the DB from hammering.
+  const rate = checkRateLimit(request, 'admin-live-locations', { max: 120, windowMs: 60_000 })
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please slow down.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfter) } }
+    )
   }
 
   await connectDB()
@@ -20,7 +30,7 @@ export async function GET(request: NextRequest) {
       status: { $ne: 'offline' },
       lastUpdatedAt: { $gte: staleThreshold },
     })
-      .populate('driverId', 'name email phone')
+      .populate('driverId', 'name')
       .populate('busId', 'busNumber plateNumber')
       .populate('routeId', 'name routeNumber')
       .sort({ lastUpdatedAt: -1 })
@@ -30,8 +40,8 @@ export async function GET(request: NextRequest) {
       pickupLat: { $type: 'number' },
       pickupLng: { $type: 'number' },
     })
-      .populate('passengerId', 'name phone')
-      .populate('driverId', 'name phone')
+      .populate('passengerId', 'name')
+      .populate('driverId', 'name')
       .populate('busId', 'busNumber plateNumber')
       .populate('routeId', 'name routeNumber')
       .sort({ bookingDate: 1 })

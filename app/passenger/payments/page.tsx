@@ -127,7 +127,7 @@ export default function PassengerPaymentsPage() {
               <div className="text-center py-8">
                 <CreditCard className="mx-auto h-12 w-12 text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-medium">No payment history</h3>
-                <p className="text-sm text-muted-foreground mt-1">You haven't made any payments yet.</p>
+                <p className="text-sm text-muted-foreground mt-1">You haven&apos;t made any payments yet.</p>
               </div>
             )}
           </CardContent>

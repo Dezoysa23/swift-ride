@@ -414,7 +414,7 @@ function BookPageInner() {
 
             <div className="bg-gold/20 border border-gold/40 rounded-lg p-3 text-xs text-gold">
               <strong>Demo Mode:</strong> Real Stripe.js card input will be integrated here. Click
-              "Confirm Payment" to simulate a successful payment.
+              &quot;Confirm Payment&quot; to simulate a successful payment.
             </div>
 
             {clientSecret && (

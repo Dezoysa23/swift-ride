@@ -139,7 +139,7 @@ export function PaymentHistory() {
           <Receipt className="mx-auto h-12 w-12 text-muted-foreground" />
           <h3 className="mt-4 text-lg font-medium">No Payment History</h3>
           <p className="text-sm text-muted-foreground mt-1">
-            You haven't made any payments yet.
+            You haven&apos;t made any payments yet.
           </p>
         </div>
       )}

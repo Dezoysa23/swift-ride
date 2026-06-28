@@ -1,8 +1,17 @@
-// Simple in-memory rate limiting
-// For production, use Redis instead
+// Simple in-memory rate limiting.
+// NOTE: in-memory state is per-process. On serverless/multi-instance hosting
+// (e.g. Vercel) this provides only best-effort protection — for hard guarantees
+// move to a shared store such as Upstash Redis. See DEPLOYMENT.md.
 const attempts: Record<string, { count: number; resetTime: number }> = {}
-const WINDOW_MS = 60 * 1000 // 1 minute
-const MAX_ATTEMPTS = 5
+const DEFAULT_WINDOW_MS = 60 * 1000 // 1 minute
+const DEFAULT_MAX_ATTEMPTS = 5
+
+interface RateLimitOptions {
+  /** Max requests allowed per window (default 5). */
+  max?: number
+  /** Window length in milliseconds (default 60000). */
+  windowMs?: number
+}
 
 function getClientIp(request: Request): string {
   const forwarded = request.headers.get('x-forwarded-for')
@@ -10,13 +19,19 @@ function getClientIp(request: Request): string {
   return clientIp
 }
 
-export function checkRateLimit(request: Request, key: string = 'auth'): { allowed: boolean; retryAfter?: number } {
+export function checkRateLimit(
+  request: Request,
+  key: string = 'auth',
+  options: RateLimitOptions = {}
+): { allowed: boolean; retryAfter?: number } {
+  const max = options.max ?? DEFAULT_MAX_ATTEMPTS
+  const windowMs = options.windowMs ?? DEFAULT_WINDOW_MS
   const clientIp = getClientIp(request)
   const rateLimitKey = `${key}:${clientIp}`
   const now = Date.now()
 
   if (!attempts[rateLimitKey]) {
-    attempts[rateLimitKey] = { count: 1, resetTime: now + WINDOW_MS }
+    attempts[rateLimitKey] = { count: 1, resetTime: now + windowMs }
     return { allowed: true }
   }
 
@@ -25,13 +40,13 @@ export function checkRateLimit(request: Request, key: string = 'auth'): { allowe
   // Reset if window expired
   if (now > entry.resetTime) {
     entry.count = 1
-    entry.resetTime = now + WINDOW_MS
+    entry.resetTime = now + windowMs
     return { allowed: true }
   }
 
   // Check if exceeded
   entry.count++
-  if (entry.count > MAX_ATTEMPTS) {
+  if (entry.count > max) {
     const retryAfter = Math.ceil((entry.resetTime - now) / 1000)
     return { allowed: false, retryAfter }
   }

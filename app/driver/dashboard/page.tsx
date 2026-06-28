@@ -133,7 +133,7 @@ export default function DriverDashboard() {
               <Bus className="mx-auto h-12 w-12 text-muted-foreground" />
               <h3 className="mt-4 text-lg font-medium">No Route Assigned</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                You haven't been assigned to any route yet. Please contact the administrator.
+                You haven&apos;t been assigned to any route yet. Please contact the administrator.
               </p>
             </CardContent>
           </Card>

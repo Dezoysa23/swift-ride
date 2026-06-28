@@ -27,10 +27,8 @@ export default function RegisterPage() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Registration failed')
-      toast.success('Account created!')
-      const roleHome: Record<string, string> = { driver: '/driver', passenger: '/passenger' }
-      router.push(roleHome[data.user.role] ?? '/')
-      router.refresh()
+      toast.success('Account created! Check your email for a verification code.')
+      router.push(`/auth/verify-email?email=${encodeURIComponent(form.email)}`)
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : 'Something went wrong')
     } finally {

@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { connectDB } from '@/lib/db'
 import User from '@/lib/models/User'
-import { signToken, setAuthCookie } from '@/lib/auth'
 import { checkRateLimit } from '@/lib/rateLimit'
 import { auditLog } from '@/lib/auditLog'
 import { validate } from '@/lib/validate'
+import {
+  generateVerificationCode,
+  hashCode,
+  sendVerificationEmail,
+  VERIFICATION_CODE_TTL_MS,
+} from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -53,16 +58,35 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email already registered' }, { status: 409 })
     }
 
-    const user = await User.create({ name, email, password, role, phone })
+    // Create the account as unverified with a hashed, expiring 6-digit code.
+    const code = generateVerificationCode()
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role,
+      phone,
+      emailVerified: false,
+      verificationCode: hashCode(code),
+      verificationCodeExpiry: new Date(Date.now() + VERIFICATION_CODE_TTL_MS),
+      verificationAttempts: 0,
+      lastVerificationEmailSentAt: new Date(),
+    })
 
-    const token = await signToken({ id: user._id.toString(), role: user.role, email: user.email, name: user.name })
-    await setAuthCookie(token)
+    // Send the verification email (no session is issued until the email is verified).
+    await sendVerificationEmail(user.email, code)
 
     auditLog(user._id.toString(), user.role, 'register', 'user', 'success', user._id.toString(), undefined, request)
 
-    // Return user without password field
-    const userObj = user.toJSON()
-    return NextResponse.json({ success: true, user: userObj }, { status: 201 })
+    return NextResponse.json(
+      {
+        success: true,
+        needsVerification: true,
+        email: user.email,
+        message: 'Account created. Check your email for a 6-digit verification code.',
+      },
+      { status: 201 }
+    )
   } catch (err) {
     console.error('Registration error:', err)
     return NextResponse.json({ error: 'Registration failed' }, { status: 500 })

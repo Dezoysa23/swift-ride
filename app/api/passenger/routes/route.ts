@@ -25,7 +25,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Search parameters too long' }, { status: 400 })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const query: Record<string, any> = { status: 'active' }
 
   if (routeId) {

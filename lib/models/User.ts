@@ -16,7 +16,14 @@ export interface IUser extends Document {
   status?: 'available' | 'on_duty' | 'off_duty'
   // Passenger fields
   walletBalance: number
-  // Password reset — TODO: replace console logging with SMTP email (Option A) in a future update
+  // Email verification (only set on new self-registrations; absent on legacy users = treated as verified)
+  emailVerified?: boolean
+  emailVerifiedAt?: Date
+  verificationCode?: string // sha256 hash of the 6-digit code
+  verificationCodeExpiry?: Date
+  verificationAttempts?: number
+  lastVerificationEmailSentAt?: Date
+  // Password reset
   resetToken?: string
   resetTokenExpiry?: Date
   comparePassword(candidate: string): Promise<boolean>
@@ -36,11 +43,22 @@ const UserSchema = new Schema<IUser>(
     assignedRouteId: { type: Schema.Types.ObjectId, ref: 'Route' },
     status: { type: String, enum: ['available', 'on_duty', 'off_duty'] },
     walletBalance: { type: Number, default: 0 },
+    // No default on emailVerified: legacy users (field absent) must NOT be treated as unverified.
+    emailVerified: { type: Boolean },
+    emailVerifiedAt: { type: Date },
+    verificationCode: { type: String },
+    verificationCodeExpiry: { type: Date },
+    verificationAttempts: { type: Number, default: 0 },
+    lastVerificationEmailSentAt: { type: Date },
     resetToken: { type: String },
     resetTokenExpiry: { type: Date },
   },
   { timestamps: true }
 )
+
+// Indexes for common query patterns (email already indexed via `unique: true`).
+UserSchema.index({ role: 1 })
+UserSchema.index({ resetToken: 1 }, { sparse: true })
 
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next()
@@ -54,8 +72,10 @@ UserSchema.methods.comparePassword = function (candidate: string) {
 
 UserSchema.set('toJSON', {
   transform: (_doc, ret) => {
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-    delete (ret as unknown as Record<string, unknown>).password
+    const r = ret as unknown as Record<string, unknown>
+    delete r.password
+    delete r.verificationCode
+    delete r.resetToken
     return ret
   },
 })

@@ -26,12 +26,18 @@ export async function GET(
     return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
   }
 
-  // Verify this booking belongs to a turn assigned to this driver
+  // Ownership is mandatory: the booking must either be directly assigned to this
+  // driver, or belong to a turn this driver owns. A booking with neither must never
+  // be returned (otherwise passenger PII leaks across drivers).
+  const directlyAssigned = booking.driverId?.toString() === auth.id
+  let ownsViaTurn = false
   if (booking.turnId) {
     const turn = await Turn.findOne({ _id: booking.turnId, driverId: auth.id }).lean()
-    if (!turn) {
-      return NextResponse.json({ error: 'Access denied' }, { status: 403 })
-    }
+    ownsViaTurn = !!turn
+  }
+
+  if (!directlyAssigned && !ownsViaTurn) {
+    return NextResponse.json({ error: 'Access denied' }, { status: 403 })
   }
 
   return NextResponse.json({ success: true, data: booking })

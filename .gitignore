@@ -1,6 +1,9 @@
 # Environment variables (contain secrets)
 .env
+.env.*
 .env.local
+!.env.example
+!.env.local.example
 .env.local.backup
 .env.*.local
 

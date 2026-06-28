@@ -2,7 +2,14 @@ import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
 
-const secret = new TextEncoder().encode(process.env.JWT_SECRET!)
+const JWT_SECRET = process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is not set')
+}
+if (process.env.NODE_ENV === 'production' && JWT_SECRET.length < 32) {
+  throw new Error('JWT_SECRET must be at least 32 characters in production')
+}
+const secret = new TextEncoder().encode(JWT_SECRET)
 const COOKIE_NAME = 'swift_token'
 
 export interface JwtPayload {
@@ -21,7 +28,7 @@ export async function signToken(payload: JwtPayload): Promise<string> {
 }
 
 export async function verifyToken(token: string): Promise<JwtPayload> {
-  const { payload } = await jwtVerify(token, secret)
+  const { payload } = await jwtVerify(token, secret, { algorithms: ['HS256'] })
   return payload as unknown as JwtPayload
 }
 

@@ -58,7 +58,7 @@ export async function GET(
 
   // Fetch driver's current location
   const driverLoc = await DriverLocation.findOne({ driverId: booking.driverId })
-    .populate('driverId', 'name phone')
+    .populate('driverId', 'name')
     .lean()
 
   // Driver not yet online / no location data

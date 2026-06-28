@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
+import crypto from 'crypto'
 import { connectDB } from '@/lib/db'
 import User from '@/lib/models/User'
 import { validate } from '@/lib/validate'
+import { checkRateLimit } from '@/lib/rateLimit'
 
 export async function POST(request: NextRequest) {
+  const rateCheck = checkRateLimit(request, 'reset-password')
+  if (!rateCheck.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(rateCheck.retryAfter) } }
+    )
+  }
+
   try {
     const { token, password } = await request.json()
 
@@ -18,8 +28,10 @@ export async function POST(request: NextRequest) {
 
     await connectDB()
 
+    // Tokens are stored hashed; hash the incoming token to look it up.
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex')
     const user = await User.findOne({
-      resetToken: token,
+      resetToken: hashedToken,
       resetTokenExpiry: { $gt: new Date() },
     })
 

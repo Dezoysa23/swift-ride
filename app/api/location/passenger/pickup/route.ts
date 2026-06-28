@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     },
     {
       $set: {
-        pickupAddress: body.pickupAddress?.trim() || undefined,
+        pickupAddress: body.pickupAddress?.trim().slice(0, 300) || undefined,
         pickupLat: pickup.lat,
         pickupLng: pickup.lng,
       },

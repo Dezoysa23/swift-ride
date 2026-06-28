@@ -161,7 +161,7 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
                 </div>
               </div>
               <div className="text-sm text-muted-foreground">
-                This booking's route information is no longer available.
+                This booking&apos;s route information is no longer available.
               </div>
             </div>
           </CardContent>
@@ -442,7 +442,7 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
         ) : (
           <div className="text-center py-8">
             <h3 className="font-semibold text-lg">No active bookings</h3>
-            <p className="text-muted-foreground mt-1">You don't have any upcoming trips.</p>
+            <p className="text-muted-foreground mt-1">You don&apos;t have any upcoming trips.</p>
             <Button className="mt-4" asChild>
               <Link href="/passenger/routes">Book a Trip</Link>
             </Button>
@@ -459,7 +459,7 @@ export function BookingsList({ activeBookings, pastBookings, isLoading }: Bookin
         ) : (
           <div className="text-center py-8">
             <h3 className="font-semibold text-lg">No past bookings</h3>
-            <p className="text-muted-foreground mt-1">You haven't taken any trips yet.</p>
+            <p className="text-muted-foreground mt-1">You haven&apos;t taken any trips yet.</p>
           </div>
         )}
       </TabsContent>

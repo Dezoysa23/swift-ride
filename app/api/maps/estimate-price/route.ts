@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAuthUser } from '@/lib/auth'
+import { checkRateLimit } from '@/lib/rateLimit'
 import {
   calculateEstimatedPrice,
   computeDrivingRoute,
@@ -29,6 +30,14 @@ function normalizeRideType(value: unknown): RideType {
 export async function POST(request: NextRequest) {
   const auth = await getAuthUser(request)
   if (!auth) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const rate = checkRateLimit(request, 'maps-estimate', { max: 60, windowMs: 60_000 })
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please slow down.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfter) } }
+    )
+  }
 
   let body: unknown
   try {

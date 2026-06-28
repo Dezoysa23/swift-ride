@@ -38,8 +38,8 @@ export default function ForgotPasswordPage() {
       title="Forgot password"
       description={
         submitted
-          ? 'Check the server console for your reset link.'
-          : "Enter your email and we'll log a reset link to the server console."
+          ? 'If that email is registered, a reset link is on its way.'
+          : "Enter your email and we'll send you a password reset link."
       }
     >
       {submitted ? (

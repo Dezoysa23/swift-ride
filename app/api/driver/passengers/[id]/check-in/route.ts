@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { ObjectId } from 'mongodb'
 import { getAuthUser } from '@/lib/auth'
-import { getDb } from '@/lib/db'
+import { connectDB } from '@/lib/db'
+import { validate } from '@/lib/validate'
+import Booking from '@/lib/models/Booking'
+import Turn from '@/lib/models/Turn'
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -10,33 +12,37 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const { id } = await params
-    const db = await getDb()
-
-    const driver = await db.collection('users').findOne({ _id: new ObjectId(auth.id) })
-    const passenger = await db.collection('users').findOne({ _id: new ObjectId(id) })
-
-    if (!passenger) {
-      return NextResponse.json({ error: 'Passenger not found' }, { status: 404 })
+    const { id } = await params // passenger id
+    if (!validate.mongoId(id)) {
+      return NextResponse.json({ error: 'Invalid passenger id' }, { status: 400 })
     }
 
-    const booking = await db.collection('bookings').findOne({
+    await connectDB()
+
+    // A driver may only check in passengers on their OWN active turn.
+    const activeTurn = await Turn.findOne({ driverId: auth.id, status: 'active' })
+    if (!activeTurn) {
+      return NextResponse.json(
+        { error: 'No active turn. Start your turn before checking in passengers.' },
+        { status: 403 }
+      )
+    }
+
+    const booking = await Booking.findOne({
       passengerId: id,
-      routeId: driver?.assignedRouteId,
+      turnId: activeTurn._id,
       status: 'confirmed',
     })
 
     if (!booking) {
       return NextResponse.json(
-        { error: 'No active booking found for this passenger on your route' },
+        { error: 'No confirmed booking for this passenger on your active turn' },
         { status: 404 }
       )
     }
 
-    await db.collection('bookings').updateOne(
-      { _id: booking._id },
-      { $set: { status: 'completed', checkedInAt: new Date(), checkedInBy: auth.id } }
-    )
+    booking.status = 'completed'
+    await booking.save()
 
     return NextResponse.json({ message: 'Passenger checked in successfully' })
   } catch (error) {

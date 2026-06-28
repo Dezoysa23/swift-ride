@@ -25,6 +25,11 @@ export default function LoginPage() {
         body: JSON.stringify(form),
       })
       const data = await res.json()
+      if (res.status === 403 && data.needsVerification) {
+        toast.info('Please verify your email to continue.')
+        router.push(`/auth/verify-email?email=${encodeURIComponent(data.email ?? form.email)}`)
+        return
+      }
       if (!res.ok) throw new Error(data.error ?? 'Login failed')
       toast.success('Welcome back!')
       const roleHome: Record<string, string> = {

@@ -18,8 +18,8 @@ export async function GET(request: NextRequest) {
       { dropoffLat: { $type: 'number' }, dropoffLng: { $type: 'number' } },
     ],
   })
-    .populate('passengerId', 'name phone')
-    .populate('driverId', 'name phone')
+    .populate('passengerId', 'name')
+    .populate('driverId', 'name')
     .populate('busId', 'busNumber plateNumber')
     .populate('routeId', 'name routeNumber')
     .sort({ bookingDate: 1 })

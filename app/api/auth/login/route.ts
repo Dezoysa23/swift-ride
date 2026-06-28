@@ -41,6 +41,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Account is deactivated' }, { status: 403 })
     }
 
+    // Block unverified accounts. Legacy users (emailVerified absent) are NOT blocked.
+    if (user.emailVerified === false) {
+      auditLog(user._id.toString(), user.role, 'login_attempt', 'user', 'failure', undefined, { reason: 'email_unverified' }, request)
+      return NextResponse.json(
+        { error: 'Please verify your email to continue.', needsVerification: true, email: user.email },
+        { status: 403 }
+      )
+    }
+
     const token = await signToken({ id: user._id.toString(), role: user.role, email: user.email, name: user.name })
     await setAuthCookie(token)
 

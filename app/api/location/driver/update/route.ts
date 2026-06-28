@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAuthUser } from '@/lib/auth'
+import { checkRateLimit } from '@/lib/rateLimit'
 import { connectDB } from '@/lib/db'
 import { isLatLng } from '@/lib/maps/google-maps'
 import Bus from '@/lib/models/Bus'
@@ -12,6 +13,13 @@ function readNumber(value: unknown): number | undefined {
   return Number.isFinite(number) ? number : undefined
 }
 
+// Drop out-of-range telemetry instead of rejecting the whole update, so a flaky
+// sensor reading never blocks a legitimate location ping.
+function inRange(value: number | undefined, min: number, max: number): number | undefined {
+  if (value === undefined) return undefined
+  return value >= min && value <= max ? value : undefined
+}
+
 function readLocation(body: Record<string, unknown>) {
   const source =
     body.location && typeof body.location === 'object'
@@ -21,9 +29,9 @@ function readLocation(body: Record<string, unknown>) {
   return {
     lat: readNumber(source.lat),
     lng: readNumber(source.lng),
-    heading: readNumber(source.heading),
-    speed: readNumber(source.speed),
-    accuracy: readNumber(source.accuracy),
+    heading: inRange(readNumber(source.heading), 0, 360),
+    speed: inRange(readNumber(source.speed), 0, 1000),
+    accuracy: inRange(readNumber(source.accuracy), 0, 100000),
   }
 }
 
@@ -31,6 +39,15 @@ export async function POST(request: NextRequest) {
   const auth = await getAuthUser(request)
   if (!auth || auth.role !== 'driver') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // Drivers ping frequently while on trip — cap high to block abuse without breaking normal updates.
+  const rate = checkRateLimit(request, 'driver-location', { max: 120, windowMs: 60_000 })
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { error: 'Too many location updates.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfter) } }
+    )
   }
 
   let body: Record<string, unknown>

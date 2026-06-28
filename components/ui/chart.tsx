@@ -107,7 +107,6 @@ type TooltipPayloadItem = {
   name?: string | number
   value?: number | string
   color?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any
 }
 
