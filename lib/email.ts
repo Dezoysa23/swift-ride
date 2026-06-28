@@ -6,6 +6,7 @@ import { Resend } from 'resend'
 // In production with no key, sending fails safely (returns false) and is logged.
 
 const FROM = process.env.EMAIL_FROM ?? 'Swift Ride <onboarding@resend.dev>'
+const REPLY_TO = process.env.EMAIL_REPLY_TO
 
 let client: Resend | null = null
 function getResend(): Resend | null {
@@ -27,14 +28,22 @@ export async function sendEmail({ to, subject, html, text }: SendArgs): Promise<
   if (!resend) {
     if (process.env.NODE_ENV !== 'production') {
       // Dev fallback — never used in production.
-      console.log(`\n[email:dev] To: ${to}\n[email:dev] Subject: ${subject}\n[email:dev] ${text}\n`)
+      const replyLine = REPLY_TO ? `\n[email:dev] Reply-To: ${REPLY_TO}` : ''
+      console.log(`\n[email:dev] ── EMAIL (no RESEND_API_KEY set) ──\n[email:dev] To:      ${to}\n[email:dev] Subject: ${subject}${replyLine}\n[email:dev] Body:    ${text}\n[email:dev] ────────────────────────────────\n`)
       return true
     }
     console.error('Email not sent: RESEND_API_KEY is not configured')
     return false
   }
   try {
-    const { error } = await resend.emails.send({ from: FROM, to, subject, html, text })
+    const { error } = await resend.emails.send({
+      from: FROM,
+      to,
+      subject,
+      html,
+      text,
+      ...(REPLY_TO ? { replyTo: REPLY_TO } : {}),
+    })
     if (error) {
       console.error('Resend error:', error.message)
       return false

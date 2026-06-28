@@ -89,10 +89,7 @@ const PaymentForm = ({ clientSecret, onSuccess, onCancel }: { clientSecret: stri
         <div className="bg-muted p-4 rounded-lg">
           <PaymentElement options={{
             layout: {
-              type: 'tabs',
-              defaultCollapsed: false,
-              radios: false,
-              spacedAccordionItems: true
+              type: 'tabs'
             },
             fields: {
               billingDetails: {
