@@ -139,7 +139,7 @@ export function PassengerList({ routeId }: PassengerListProps) {
           </p>
         </div>
       ) : (
-        <div className="border rounded-md">
+        <div className="overflow-x-auto border rounded-md">
           <Table>
             <TableHeader>
               <TableRow>

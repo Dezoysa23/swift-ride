@@ -151,7 +151,7 @@ export default function BusesPage() {
 
   const FormFields = (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <Label htmlFor="busNumber">Bus Number</Label>
           <Input id="busNumber" name="busNumber" value={form.busNumber} onChange={handleChange} placeholder="BUS-001" />
@@ -165,7 +165,7 @@ export default function BusesPage() {
         <Label htmlFor="model">Model</Label>
         <Input id="model" name="model" value={form.model} onChange={handleChange} placeholder="Toyota Coaster" />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <Label htmlFor="year">Year</Label>
           <Input id="year" name="year" type="number" value={form.year} onChange={handleChange} />
@@ -208,6 +208,7 @@ export default function BusesPage() {
           <CardTitle className="text-base">Fleet ({buses.length})</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -277,6 +278,7 @@ export default function BusesPage() {
               )}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
 

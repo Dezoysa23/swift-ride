@@ -159,6 +159,7 @@ export default function ReportsPage() {
       <Card>
         <CardHeader><CardTitle className="text-base">Bookings ({bookings.length})</CardTitle></CardHeader>
         <CardContent className="p-0">
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -206,6 +207,7 @@ export default function ReportsPage() {
               )}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

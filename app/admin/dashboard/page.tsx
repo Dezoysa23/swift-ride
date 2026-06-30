@@ -151,6 +151,7 @@ export default async function AdminDashboardPage() {
             <CardTitle className="text-base">Recent Bookings</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
+            <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -187,6 +188,7 @@ export default async function AdminDashboardPage() {
                 )}
               </TableBody>
             </Table>
+            </div>
           </CardContent>
         </Card>
 
@@ -196,6 +198,7 @@ export default async function AdminDashboardPage() {
             <CardTitle className="text-base">Recent Turns</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
+            <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -230,6 +233,7 @@ export default async function AdminDashboardPage() {
                 )}
               </TableBody>
             </Table>
+            </div>
           </CardContent>
         </Card>
       </div>

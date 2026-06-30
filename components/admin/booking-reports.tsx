@@ -145,7 +145,7 @@ export function BookingReports() {
             <Skeleton key={i} className="h-32" />
           ))}
         </div>
-        <Skeleton className="h-[400px]" />
+        <Skeleton className="h-[280px] md:h-[400px]" />
       </div>
     )
   }
@@ -244,7 +244,7 @@ export function BookingReports() {
               <CardDescription>Number of bookings and revenue by day.</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-[400px]">
+              <div className="h-[280px] md:h-[400px]">
                 <ChartContainer
                   config={{
                     bookings: {
@@ -282,7 +282,7 @@ export function BookingReports() {
               <CardDescription>Bookings and revenue by route.</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-[400px]">
+              <div className="h-[280px] md:h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie

@@ -103,7 +103,7 @@ export default function SettingsPage() {
                 <p className="text-sm text-muted-foreground">Loading settings…</p>
               ) : (
                 <>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <Label htmlFor="appName">Application Name</Label>
                       <Input
@@ -123,7 +123,7 @@ export default function SettingsPage() {
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <Label htmlFor="defaultFare">Default Fare</Label>
                       <Input

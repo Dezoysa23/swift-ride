@@ -95,6 +95,7 @@ export default function PassengerPaymentsPage() {
                 <Skeleton className="h-20 w-full" />
               </div>
             ) : payments.length > 0 ? (
+              <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -123,6 +124,7 @@ export default function PassengerPaymentsPage() {
                   ))}
                 </TableBody>
               </Table>
+              </div>
             ) : (
               <div className="text-center py-8">
                 <CreditCard className="mx-auto h-12 w-12 text-muted-foreground" />

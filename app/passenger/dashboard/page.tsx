@@ -121,7 +121,7 @@ export default function PassengerDashboard() {
         </div>
 
         <Tabs defaultValue="bookings" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
             <TabsTrigger value="bookings">My Bookings</TabsTrigger>
             <TabsTrigger value="routes">Available Routes</TabsTrigger>
             <TabsTrigger value="map">Live Map</TabsTrigger>

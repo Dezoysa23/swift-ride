@@ -135,7 +135,7 @@ export default function RoutesPage() {
 
   const FormBody = (
     <div className="space-y-4 max-h-[65vh] overflow-y-auto pr-1">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <Label>Route Number</Label>
           <Input name="routeNumber" value={form.routeNumber} onChange={handleChange} placeholder="R-001" />
@@ -145,7 +145,7 @@ export default function RoutesPage() {
           <Input name="name" value={form.name} onChange={handleChange} placeholder="City Centre Express" />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <Label>Start Point</Label>
           <Input name="startPoint" value={form.startPoint} onChange={handleChange} placeholder="Colombo Fort" />
@@ -155,7 +155,7 @@ export default function RoutesPage() {
           <Input name="endPoint" value={form.endPoint} onChange={handleChange} placeholder="Kandy" />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="space-y-1.5">
           <Label>Fare (LKR)</Label>
           <Input name="fare" type="number" value={form.fare} onChange={handleChange} />
@@ -206,6 +206,7 @@ export default function RoutesPage() {
       <Card>
         <CardHeader><CardTitle className="text-base">Routes ({routes.length})</CardTitle></CardHeader>
         <CardContent className="p-0">
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -292,6 +293,7 @@ export default function RoutesPage() {
               )}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
 

@@ -337,7 +337,7 @@ export function LiveLocationMap() {
   }, [filteredBookings, filteredDrivers])
 
   if (isLoading) {
-    return <Skeleton className="h-[640px] w-full" />
+    return <Skeleton className="h-[350px] w-full md:h-[500px] lg:h-[640px]" />
   }
 
   return (
@@ -391,7 +391,7 @@ export function LiveLocationMap() {
         </Card>
       </div>
 
-      <div className="grid min-h-[640px] gap-5 xl:grid-cols-[380px_1fr]">
+      <div className="grid gap-5 xl:grid-cols-[380px_1fr]">
         <div className="space-y-5">
           <Card>
             <CardHeader className="pb-3">
@@ -490,7 +490,7 @@ export function LiveLocationMap() {
         </div>
 
         <div className="overflow-hidden rounded-lg border bg-[#111315]">
-          <div ref={mapRef} className="h-[640px] w-full" />
+          <div ref={mapRef} className="h-[350px] w-full md:h-[500px] lg:h-[640px]" />
         </div>
       </div>
 
