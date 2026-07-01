@@ -27,6 +27,7 @@ const mono = IBM_Plex_Mono({
 
 const manrope = Manrope({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-manrope',
   display: 'swap',
 })
