@@ -1,0 +1,26 @@
+@keyframes sr-vanFloat   { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes sr-tapPulse   { 0%, 100% { transform: scale(1); opacity: .85; } 50% { transform: scale(1.28); opacity: .15; } }
+@keyframes sr-glowBreath { 0%, 100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.06); } }
+@keyframes sr-roadFlow   { from { background-position: 0 0; } to { background-position: -120px 0; } }
+@keyframes sr-floatUp    { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: .9; } 100% { transform: translateY(-120px); opacity: 0; } }
+@keyframes sr-spin       { to { transform: rotate(360deg); } }
+@keyframes sr-routeDrift { from { background-position: 0 0, 0 0; } to { background-position: 900px 0, -900px 0; } }
+@keyframes sr-headlightFlash {
+  0%, 100% { filter: drop-shadow(0 0 30px rgba(255,228,90,1)) brightness(1.5); }
+  45%, 55% { filter: drop-shadow(0 0 80px rgba(255,244,150,1)) brightness(2.7); }
+}
+
+.sr-van-float       { animation: sr-vanFloat 6s ease-in-out infinite; }
+.sr-tap-ring         { transform-box: fill-box; transform-origin: center; animation: sr-tapPulse 2s ease-out infinite; }
+.sr-tap-ring--b      { animation-delay: .4s; }
+.sr-glow-breath      { animation: sr-glowBreath 5s ease-in-out infinite; }
+.sr-road-flow        { animation: sr-roadFlow 1.1s linear infinite; }
+.sr-route-drift      { animation: sr-routeDrift 40s linear infinite; }
+.sr-float-up         { animation: sr-floatUp 5s ease-in-out infinite; }
+.sr-spin             { animation: sr-spin .7s linear infinite; }
+.sr-headlight-flash  { animation: sr-headlightFlash 1.3s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-van-float, .sr-tap-ring, .sr-glow-breath, .sr-road-flow, .sr-route-drift,
+  .sr-float-up, .sr-spin, .sr-headlight-flash { animation: none !important; }
+}
