@@ -1,19 +1,23 @@
 import crypto from 'crypto'
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 
-// Server-only email helper. Uses Resend when RESEND_API_KEY is set; otherwise
-// falls back to a dev console log so local development still works without a key.
-// In production with no key, sending fails safely (returns false) and is logged.
+// Server-only email helper. Uses Gmail SMTP when GMAIL_USER + GMAIL_APP_PASSWORD are set;
+// otherwise falls back to a dev console log so local development still works without credentials.
+// In production with no credentials, sending fails safely (returns false) and is logged.
 
-const FROM = process.env.EMAIL_FROM ?? 'Swift Ride <onboarding@resend.dev>'
-const REPLY_TO = process.env.EMAIL_REPLY_TO
+let transporter: nodemailer.Transporter | null = null
 
-let client: Resend | null = null
-function getResend(): Resend | null {
-  const key = process.env.RESEND_API_KEY
-  if (!key) return null
-  if (!client) client = new Resend(key)
-  return client
+function getTransporter(): nodemailer.Transporter | null {
+  const user = process.env.GMAIL_USER
+  const pass = process.env.GMAIL_APP_PASSWORD
+  if (!user || !pass) return null
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user, pass },
+    })
+  }
+  return transporter
 }
 
 interface SendArgs {
@@ -24,30 +28,20 @@ interface SendArgs {
 }
 
 export async function sendEmail({ to, subject, html, text }: SendArgs): Promise<boolean> {
-  const resend = getResend()
-  if (!resend) {
+  const transport = getTransporter()
+  const from = `Swift Ride <${process.env.GMAIL_USER}>`
+
+  if (!transport) {
     if (process.env.NODE_ENV !== 'production') {
-      // Dev fallback — never used in production.
-      const replyLine = REPLY_TO ? `\n[email:dev] Reply-To: ${REPLY_TO}` : ''
-      console.log(`\n[email:dev] ── EMAIL (no RESEND_API_KEY set) ──\n[email:dev] To:      ${to}\n[email:dev] Subject: ${subject}${replyLine}\n[email:dev] Body:    ${text}\n[email:dev] ────────────────────────────────\n`)
+      console.log(`\n[email:dev] ── EMAIL (no GMAIL credentials set) ──\n[email:dev] To:      ${to}\n[email:dev] Subject: ${subject}\n[email:dev] Body:    ${text}\n[email:dev] ────────────────────────────────\n`)
       return true
     }
-    console.error('Email not sent: RESEND_API_KEY is not configured')
+    console.error('Email not sent: GMAIL_USER or GMAIL_APP_PASSWORD is not configured')
     return false
   }
+
   try {
-    const { error } = await resend.emails.send({
-      from: FROM,
-      to,
-      subject,
-      html,
-      text,
-      ...(REPLY_TO ? { replyTo: REPLY_TO } : {}),
-    })
-    if (error) {
-      console.error('Resend error:', error.message)
-      return false
-    }
+    await transport.sendMail({ from, to, subject, html, text })
     return true
   } catch (err) {
     console.error('Email send failed:', err)
