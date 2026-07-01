@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Space_Grotesk, IBM_Plex_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, Space_Grotesk, IBM_Plex_Mono, Manrope } from 'next/font/google'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import { AuthProvider } from '@/lib/auth-context'
@@ -25,6 +25,12 @@ const mono = IBM_Plex_Mono({
   display: 'swap',
 })
 
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Swift Ride',
   description: 'Bus fleet and ride management platform',
@@ -32,7 +38,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${display.variable} ${mono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${display.variable} ${mono.variable} ${manrope.variable}`}>
       <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"
