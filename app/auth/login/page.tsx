@@ -63,7 +63,7 @@ export default function LoginPage() {
           </div>
 
           <div style={{ position: 'relative', zIndex: 4, marginTop: 14, width: '100%', minHeight: 196 }}>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', opacity: on ? 0 : 1, pointerEvents: on ? 'none' : 'auto', transition: 'opacity .5s ease' }}>
+            <div inert={on || undefined} style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', opacity: on ? 0 : 1, pointerEvents: on ? 'none' : 'auto', transition: 'opacity .5s ease' }}>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '5px 13px', borderRadius: 999, background: 'rgba(22,58,88,0.5)', border: '1px solid rgba(255,201,163,0.25)', fontSize: 11.5, fontWeight: 600, letterSpacing: '0.14em', color: '#FFC9A3' }}>
                 READY TO RIDE?
               </div>
@@ -78,7 +78,7 @@ export default function LoginPage() {
                 <Lightbulb size={18} /> Turn on lights
               </button>
             </div>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', opacity: on ? 1 : 0, pointerEvents: on ? 'auto' : 'none', transition: 'opacity .5s ease .2s' }}>
+            <div inert={on ? undefined : true} style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', opacity: on ? 1 : 0, pointerEvents: on ? 'auto' : 'none', transition: 'opacity .5s ease .2s' }}>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 14px', borderRadius: 999, background: 'rgba(168,194,86,0.14)', border: '1px solid rgba(168,194,86,0.4)', fontSize: 11.5, fontWeight: 700, letterSpacing: '0.12em', color: '#B7D06A' }}>
                 <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#A8C256', boxShadow: '0 0 8px #A8C256' }} />
                 LIGHTS ON
